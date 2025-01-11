@@ -41,7 +41,7 @@ const RightSideProductSection = () => {
                                     $6.49
                                 </span>
                             </div>
-                            <button className="w-full bg-blue-600 text-white rounded-full py-2 hover:bg-blue-700">
+                            <button className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white rounded-full py-2">
                                 Add to Cart
                             </button>
                         </div>

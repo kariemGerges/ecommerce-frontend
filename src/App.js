@@ -9,6 +9,7 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import Test from './pages/TestingPage/Testingpage';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Products from './pages/Products/Products';
+import ErrLandingPage from './pages/ErrLandingPage/ErrLandingPage';
 
 function App() {
     return (
@@ -21,6 +22,9 @@ function App() {
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/contact" element={<ContactUs />} />
                     <Route path="/products" element={<Products />} />
+                    {/* catch all other route */}
+                    <Route path="/404" element={<ErrLandingPage />} />
+                    <Route path="*" element={<ErrLandingPage />} />
                 </Routes>
                 <Footer />
             </Router>
