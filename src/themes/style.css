@@ -1,0 +1,24 @@
+:root {
+    --primary-color: #2D7A46;
+    --secondary-color: #F4A261;
+    --background-color: #FFFFFF;
+    --accent-color: #FFC300;
+    --text-color: #333333;
+    --button-bg-color: #2D7A46;
+    --button-text-color: #FFFFFF;
+}
+
+[data-theme="dark"] {
+    --primary-color: #1B4332;
+    --secondary-color: #A75D5D;
+    --background-color: #121212;
+    --accent-color: #F4D03F;
+    --text-color: #E1E1E1;
+    --button-bg-color: #1B4332;
+    --button-text-color: #FFFFFF;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
