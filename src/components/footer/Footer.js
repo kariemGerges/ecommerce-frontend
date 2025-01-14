@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import {
     Heart,
     Mail,
@@ -10,32 +9,32 @@ import {
     UserRoundPen,
     Salad,
     House,
+    MessageCircleQuestion,
+    ShoppingCart,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ThemeContext } from '../../context/ThemeContext';
-// import logo from '../../assets/AIDonation.jpeg'
 
 const Footer = () => {
-    const { theme } = useContext(ThemeContext);
+    const navLinks = [
+        { name: 'Home', path: '/', icon: <House size={16} /> },
+        { name: 'Products', path: '/products', icon: <Salad size={16} /> },
+        {
+            name: 'About',
+            path: '/about',
+            icon: <MessageCircleQuestion size={16} />,
+        },
+        { name: 'Contact', path: '/contact', icon: <Mail size={16} /> },
+        { name: 'Profile', path: '/profile', icon: <UserRoundPen size={16} /> },
+        { name: 'Cart', path: '/cart', icon: <ShoppingCart size={16} /> },
+    ];
+
+    const groupedLinks = [];
+    for (let i = 0; i < navLinks.length; i += 3) {
+        groupedLinks.push(navLinks.slice(i, i + 3));
+    }
 
     return (
-        <footer
-            className={`bottom-0 w-full  
-                ${
-                    theme === 'dark'
-                        ? 'bg-[#121212] text-white'
-                        : 'bg-white text-black'
-                }
-                pb-5 pt-5
-                `}
-            // style={{
-            //     background: `url(${logo})`,
-            //     backgroundRepeat: 'no-repeat',
-            //     backgroundPosition: 'center',
-            //     backgroundSize: 'cover',
-            //     backgroundAttachment: 'fixed',
-            // }}
-        >
+        <footer className="bottom-0 w-full pb-5 pt-5">
             <div className="py-5 pb-5"></div>
             <div className="max-w-6xl mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -69,7 +68,7 @@ const Footer = () => {
                                     href="mailto:info@donationpal.com"
                                     className="hover:underline"
                                 >
-                                    info@donationpal.com
+                                    info@freshmart.com
                                 </a>
                             </div>
                             <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
@@ -84,7 +83,7 @@ const Footer = () => {
                             <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
                                 <MapPin size={16} />
                                 <span>
-                                    123 Charity Lane, Giving City, 12345
+                                    123 Charity Lane, westfield, IN 46074
                                 </span>
                             </div>
                         </div>
@@ -125,36 +124,29 @@ const Footer = () => {
 
                     <div className="space-y-4">
                         <h4 className="text-xl font-semibold">Links</h4>
-                        <div className="space-y-2">
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <House size={16} />
-                                <Link to="/" className="hover:underline">
-                                    Home
-                                </Link>
-                            </div>
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <Salad size={16} />
-                                <Link
-                                    to="/AllCampaigns"
-                                    className="hover:underline"
-                                >
-                                    Products
-                                </Link>
-                            </div>
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <UserRoundPen size={16} />
-                                <Link to="/Profile" className="hover:underline">
-                                    Profile
-                                </Link>
-                            </div>
+                        <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-3 space-x-9 gap-4">
+                            {groupedLinks.map((group, colIndex) => (
+                                <div key={colIndex} className="space-y-2">
+                                    {group.map((link, index) => (
+                                        <Link
+                                            key={index}
+                                            to={link.path}
+                                            className="flex items-center space-x-2 transition-transform hover:translate-x-1"
+                                        >
+                                            <span>{link.icon}</span>
+                                            <span>{link.name}</span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-gray-900/30 text-center">
+                <div className="mt-8 pt-4 border-t border-green-900/30 text-center">
                     <p className="text-sm">
-                        &copy; {new Date().getFullYear()} Donation Pal. All
-                        rights reserved.
+                        &copy; {new Date().getFullYear()} Fresh Mart. All rights
+                        reserved.
                     </p>
                     <br />
                     <p className="text-sm">Made with ❤️ by Kariem Gerges.</p>

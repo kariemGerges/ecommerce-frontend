@@ -1,12 +1,14 @@
 import image from '../../assets/vegetables_opengraph.jpg';
 import { ChevronRight } from 'lucide-react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 const HeroSection = () => {
     return (
         <section>
             <div className="relative min-h-screen flex items-center">
                 <div className="absolute inset-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#2D7A46]/90 to-[#F4A261]/90 mix-blend-multiply"></div>
-                    <img
+                    <LazyLoadImage
                         src={image}
                         alt="Fresh produce"
                         className="w-full h-full object-cover"

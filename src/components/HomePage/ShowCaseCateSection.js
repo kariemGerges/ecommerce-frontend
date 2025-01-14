@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Apple, Carrot, Milk, Fish, Coffee } from 'lucide-react';
 import image from '../../assets/vegetables_opengraph.jpg';
 const ShowCaseCateSection = () => {
@@ -44,7 +45,7 @@ const ShowCaseCateSection = () => {
                                 key={item}
                                 className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
                             >
-                                <img
+                                <LazyLoadImage
                                     src={image}
                                     alt="Product"
                                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"

@@ -1,117 +1,16 @@
+// export default AuthModal;
 import React, { useState } from 'react';
 import {
     X,
     ShoppingCart,
     Tag,
     Gift,
-    User,
-    Mail,
-    Lock,
-    Phone,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
-// Sign In Form Component
-const SignInForm = () => (
-    <form className="space-y-6">
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-            </label>
-            <div className="relative">
-                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="email"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your email"
-                />
-            </div>
-        </div>
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-            </label>
-            <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="password"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your password"
-                />
-            </div>
-        </div>
-        <button
-            type="submit"
-            className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-            Sign In
-        </button>
-    </form>
-);
+import SignUpForm from '../AuthForm/SignUpForm';
+import SignInForm from '../AuthForm/SignInForm';
 
-// Sign Up Form Component
-const SignUpForm = () => (
-    <form className="space-y-6">
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
-            </label>
-            <div className="relative">
-                <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="text"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your full name"
-                />
-            </div>
-        </div>
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-            </label>
-            <div className="relative">
-                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="email"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your email"
-                />
-            </div>
-        </div>
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Phone number
-            </label>
-            <div className="relative">
-                <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="tel"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your phone number"
-                />
-            </div>
-        </div>
-        <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-            </label>
-            <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                <input
-                    type="password"
-                    className="pl-10 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Create a password"
-                />
-            </div>
-        </div>
-        <button
-            type="submit"
-            className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-            Create Account
-        </button>
-    </form>
-);
 
 const AuthModal = () => {
     const { isAuthModalOpen, setIsAuthModalOpen } = useAuth();
@@ -122,6 +21,7 @@ const AuthModal = () => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-xl w-full max-w-5xl relative overflow-hidden">
+                
                 {/* Close Button */}
                 <button
                     onClick={() => setIsAuthModalOpen(false)}

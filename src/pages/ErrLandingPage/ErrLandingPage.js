@@ -12,7 +12,7 @@ const ErrLandingPage = () => {
     }, []);
 
     return (
-        <div className="h-screen w-full bg-gray-100 flex flex-col items-center justify-center overflow-hidden">
+        <div className="h-screen w-full flex flex-col items-center justify-center overflow-hidden">
             <div className="relative">
                 <div className="text-9xl font-bold text-gray-300 flex">
                     <span className="animate-bounce-left">4</span>
@@ -25,7 +25,7 @@ const ErrLandingPage = () => {
             </div>
 
             <div className="mt-8 text-center">
-                <p className="text-2xl font-semibold text-gray-700 mb-4 animate-fade-in">
+                <p className="text-2xl font-semibold text-gray-500 mb-4 animate-fade-in">
                     Oops! We're blushing with embarrassment.
                 </p>
                 <p className="text-gray-600 mb-8 animate-fade-in delay-1000">

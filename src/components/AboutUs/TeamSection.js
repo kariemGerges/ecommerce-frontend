@@ -22,11 +22,12 @@ const TeamSection = () => {
                                 key={member}
                                 className="group relative overflow-hidden rounded-2xl"
                             >
-                                <img
+                                {/* <img
                                     src="/api/placeholder/400/500"
                                     alt="Team member"
                                     className="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-300"
-                                />
+                                /> */}
+                                <div className="w-full h-96 bg-gray-300 dark:bg-gray-700 object-cover group-hover:scale-110 transition-transform duration-300"></div>
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                                     <div className="absolute bottom-0 p-6 text-white">
                                         <h4 className="text-xl font-semibold mb-1">
