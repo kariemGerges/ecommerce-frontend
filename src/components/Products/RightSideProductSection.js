@@ -1,6 +1,38 @@
 // This component is used to display the products on the right side of the page and the header filter (Best match, Price: Low to High, Price: High to Low)
 import { Heart } from 'lucide-react';
+
+// import hooks
+import { usePaginatedProducts } from '../../hooks/products/useProductsPagenate';
+
+// import components
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
+import Pagination from '../Products/Pagination';
+import image from '../../assets/vegetables_opengraph.jpg';
+
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useState } from 'react';
+
 const RightSideProductSection = () => {
+    const [page, setPage] = useState(1);
+    const { data, isLoading, isError, error } = usePaginatedProducts(page, 10);
+
+    if (isLoading)
+        return (
+            <p>
+                <Loading /> Loading page {page}...
+            </p>
+        );
+    if (isError)
+        return (
+            <p className='flex flex-col items-center justify-center'>
+                <Error /> {error.message === 'Network Error' ? 'Network Error' : '4048'}
+            </p>
+        );
+
+    const { products, currentPage, totalPages, hasNextPage, hasPreviousPage } =
+        data;
+
     return (
         <section>
             {/* Header */}
@@ -16,38 +48,45 @@ const RightSideProductSection = () => {
             </div>
             {/* Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {Array.from({ length: 12 }).map((_, i) => (
-                    <div
-                        key={i}
-                        className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
-                    >
-                        <div className="relative mb-4">
-                            <img
-                                src="/api/placeholder/200/200"
-                                alt="Product"
-                                className="w-full aspect-square object-contain"
-                            />
-                            <button className="absolute top-2 right-2 text-gray-400 hover:text-red-500">
-                                <Heart size={20} />
-                            </button>
-                        </div>
-                        <div className="space-y-2">
-                            <h3 className="font-medium">Product Name</h3>
-                            <div className="flex items-baseline gap-2">
-                                <span className="text-xl font-bold text-red-600">
-                                    $4.99
-                                </span>
-                                <span className="text-sm text-gray-500 line-through">
-                                    $6.49
-                                </span>
+                {products &&
+                    products.map((product, i) => (
+                        <div
+                            key={i}
+                            className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
+                        >
+                            <div className="relative mb-4">
+                                <LazyLoadImage
+                                    src={image}
+                                    alt="Product"
+                                    className="w-full aspect-square object-contain"
+                                />
+                                <button className="absolute top-2 right-2 text-gray-400 hover:text-red-500">
+                                    <Heart size={20} />
+                                </button>
                             </div>
-                            <button className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white rounded-full py-2">
-                                Add to Cart
-                            </button>
+                            <div className="space-y-2">
+                                <h3 className="font-medium">{product.name}</h3>
+                                <div className="flex items-baseline gap-2">
+                                    <span className="text-xl font-bold text-red-600">
+                                        ${product.price}
+                                    </span>
+                                </div>
+                                <button className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white rounded-full py-2">
+                                    Add to Cart
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
             </div>
+
+            {/* Pagination */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                hasNextPage={hasNextPage}
+                hasPreviousPage={hasPreviousPage}
+                setPage={setPage}
+            />
         </section>
     );
 };
