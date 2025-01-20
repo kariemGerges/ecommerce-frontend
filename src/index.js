@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
+import { AuthLoginProvider } from './context/AuthLoginContext';
 import './themes/style.css';
 
 // Create a client
@@ -34,7 +35,9 @@ root.render(
             <AuthProvider>
                 <ThemeProvider>
                     <QueryClientProvider client={queryClient}>
-                        <App />
+                        <AuthLoginProvider>
+                            <App />
+                        </AuthLoginProvider>
                         <ReactQueryDevtools initialIsOpen={false} />
                     </QueryClientProvider>
                 </ThemeProvider>

@@ -14,6 +14,7 @@ import ThemeToggleButton from '../../components/ThemeToggleButton/ThemeToggleBut
 import { ThemeContext } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
+import { useLoginAuth } from '../../context/AuthLoginContext';
 
 const Header = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -21,17 +22,22 @@ const Header = () => {
     const { theme } = useContext(ThemeContext);
     const { setIsCartOpen, cartItems } = useCart();
     const { setIsAuthModalOpen } = useAuth();
+    const { user } = useLoginAuth();
+
+    console.log(user);
 
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
     const handleCartClick = (e) => {
         e.preventDefault();
         setIsCartOpen(true);
+        setIsMenuOpen(false);
     };
 
     const handleAuthClick = (e) => {
         e.preventDefault();
         setIsAuthModalOpen(true);
+        setIsMenuOpen(false);
     };
 
     useEffect(() => {
@@ -117,16 +123,27 @@ const Header = () => {
                             <TableOfContents size={20} />
                         </button>
                         <div className="hidden md:flex items-center space-x-4">
-                            <Link
-                                to="/signin"
-                                onClick={handleAuthClick}
-                                className="flex items-center gap-2"
-                            >
-                                <User size={24} />
-                                <span>Sign In</span>
-                                <ChevronDown size={20} />
-                            </Link>
-
+                            {!user ? (
+                                <Link
+                                    to="/signin"
+                                    onClick={handleAuthClick}
+                                    className="flex items-center gap-2"
+                                >
+                                    <User size={24} />
+                                    <span>Sign In</span>
+                                    <ChevronDown size={20} />
+                                </Link>
+                            ) : (
+                                <Link
+                                    to="/profile"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center gap-2"
+                                >
+                                    <User size={24} />
+                                    <span>Profile</span>
+                                    <ChevronDown size={20} />
+                                </Link>
+                            )}
                             {/* Cart Toggle Button with Badge */}
                             <Link
                                 to="/cart"
@@ -171,15 +188,27 @@ const Header = () => {
                                 </span>
                             </Link>
                         ))}
-                        <Link
-                            to="/signin"
-                            onClick={handleAuthClick}
-                            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
-                        >
-                            <span className="flex items-center gap-2">
-                                <User size={24} /> Sign In
-                            </span>
-                        </Link>
+                        {!user ? (
+                            <Link
+                                to="/signin"
+                                onClick={handleAuthClick}
+                                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <User size={24} /> Sign In
+                                </span>
+                            </Link>
+                        ) : (
+                            <Link
+                                to="/profile"
+                                onClick={() => setIsMenuOpen(false)}
+                                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <User size={24} /> Profile
+                                </span>
+                            </Link>
+                        )}
                         <Link
                             to="/cart"
                             onClick={handleCartClick}

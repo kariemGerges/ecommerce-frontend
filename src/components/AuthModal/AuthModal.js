@@ -52,7 +52,7 @@ const AuthModal = () => {
                             </div>
                             
                             {/* Render either SignIn or SignUp form based on state */}
-                            {isSignIn ? <SignInForm /> : <SignUpForm />}
+                            {isSignIn ? <SignInForm setIsAuthModalOpen={setIsAuthModalOpen} /> : <SignUpForm setIsAuthModalOpen={setIsAuthModalOpen} />}
 
                             <p className="mt-4 text-center text-gray-600">
                                 {isSignIn

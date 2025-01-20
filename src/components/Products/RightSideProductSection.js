@@ -26,7 +26,7 @@ const RightSideProductSection = () => {
     if (isError)
         return (
             <p className='flex flex-col items-center justify-center'>
-                <Error /> {error.message === 'Network Error' ? 'Network Error' : '4048'}
+                <Error /> {error.message === 'Network Error' ? 'Network Error' : '404'}
             </p>
         );
 

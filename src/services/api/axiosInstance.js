@@ -3,27 +3,23 @@ import axios from 'axios';
 // You might store this in .env, e.g. process.env.REACT_APP_API_BASE_URL
 const axiosClient = axios.create({
     baseURL: 'http://localhost:3000',
+    withCredentials: true,
 });
 
-// Optional: Attach interceptors for auth tokens or logging
+// Attach interceptors for auth tokens or logging
+// we can still attach interceptors if needed:
 axiosClient.interceptors.request.use(
     (config) => {
-        // attach token from localStorage
+        // If you also store a token in localStorage for any reason:
         const token = localStorage.getItem('token');
         if (token) {
+            // Typically not needed if your backend relies *only* on the HTTP-only cookie,
+            // but if your server also checks Authorization headers, you can do:
             config.headers.Authorization = `Bearer ${token}`;
         }
-
-        // Logging for debugging
-        // console.log(`[Request] ${config.method.toUpperCase()} ${config.url}`, config);
-
         return config;
     },
-    (error) => {
-        // Logging
-        // console.error('[Request Error]', error);
-        return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
 );
 
 // You can also attach a response interceptor

@@ -15,7 +15,7 @@ import AboutUs from './pages/AboutUs/AboutUs';
 import Products from './pages/Products/Products';
 import ErrLandingPage from './pages/ErrLandingPage/ErrLandingPage';
 import Cart from './pages/Cart/Cart';
-
+import Profile from './pages/Profile/Profile';
 function App() {
     return (
         <div>
@@ -36,6 +36,7 @@ function App() {
                     <Route path="/contact" element={<ContactUs />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/profile" element={<Profile />} />
                     {/* catch all other route */}
                     <Route path="/404" element={<ErrLandingPage />} />
                     <Route path="*" element={<ErrLandingPage />} />
