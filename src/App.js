@@ -29,18 +29,21 @@ function App() {
                 <Header />
                 <CartDrawer />
                 <AuthModal />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/test" element={<Test />} />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/contact" element={<ContactUs />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/profile" element={<Profile />} />
-                    {/* catch all other route */}
-                    <Route path="/404" element={<ErrLandingPage />} />
-                    <Route path="*" element={<ErrLandingPage />} />
-                </Routes>
+                <div className="pt-6 ">
+                    <Routes>
+                        {/* default route */}
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/test" element={<Test />} />
+                        <Route path="/about" element={<AboutUs />} />
+                        <Route path="/contact" element={<ContactUs />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/profile" element={<Profile />} />
+                        {/* catch all other route */}
+                        <Route path="/404" element={<ErrLandingPage />} />
+                        <Route path="*" element={<ErrLandingPage />} />
+                    </Routes>
+                </div>
                 <Footer />
             </Router>
         </div>

@@ -3,7 +3,7 @@ import { Truck, Leaf, Star } from 'lucide-react';
 const FeaturesSection = () => {
     return (
         <section>
-            <div className="py-24 bg-gray-50 dark:bg-gray-900">
+            <div className="py-24 ">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-3 gap-8">
                         {[
@@ -30,7 +30,7 @@ const FeaturesSection = () => {
                                 <div className="w-16 h-16 rounded-full bg-[#2D7A46] dark:bg-[#1B4332] text-white flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
                                     <feature.icon size={32} />
                                 </div>
-                                <h3 className="text-2xl font-semibold mb-4">
+                                <h3 className="text-2xl font-semibold mb-4 text-yellow-50">
                                     {feature.title}
                                 </h3>
                                 <p className="text-gray-600 dark:text-gray-300">

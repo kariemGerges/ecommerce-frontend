@@ -31,6 +31,7 @@ const AuthModal = () => {
                 </button>
 
                 <div className="flex h-[600px] relative">
+
                     {/* Authentication Form */}
                     <div
                         className={`w-1/2 p-8 bg-white absolute transition-all duration-500 ease-in-out ${
@@ -54,7 +55,7 @@ const AuthModal = () => {
                             {/* Render either SignIn or SignUp form based on state */}
                             {isSignIn ? <SignInForm setIsAuthModalOpen={setIsAuthModalOpen} /> : <SignUpForm setIsAuthModalOpen={setIsAuthModalOpen} />}
 
-                            <p className="mt-4 text-center text-gray-600">
+                            <p className="mt-2 text-center text-gray-600 text-sm">
                                 {isSignIn
                                     ? "Don't have an account? "
                                     : 'Already have an account? '}
@@ -65,6 +66,7 @@ const AuthModal = () => {
                                     {isSignIn ? 'Create Account' : 'Sign In'}
                                 </button>
                             </p>
+
                         </div>
                     </div>
 
@@ -82,7 +84,7 @@ const AuthModal = () => {
                             </h3>
                             <p className="text-[#B06D6D] mb-8">
                                 {isSignIn
-                                    ? 'Access your rewards and savings'
+                                    ? 'Enjoy authentic Egyptian flavors'
                                     : 'Start earning rewards on every purchase'}
                             </p>
                         </div>
@@ -95,15 +97,16 @@ const AuthModal = () => {
                         {/* Floating Icons */}
                         <div className="absolute inset-0">
                             <div className="floating-icon top-24 right-24">
-                                <ShoppingCart className="h-8 w-8 text-[#B06D6D] opacity-50" />
+                                <ShoppingCart className="h-8 w-8 text-orange-400 dark:text-orange-300 opacity-80" />
                             </div>
                             <div className="floating-icon bottom-32 left-24">
-                                <Tag className="h-8 w-8 text-[#B06D6D] opacity-50" />
+                                <Tag className="h-8 w-8 text-orange-400 dark:text-orange-300 opacity-80" />
                             </div>
                             <div className="floating-icon top-48 left-32">
-                                <Gift className="h-8 w-8 text-[#B06D6D] opacity-50" />
+                                <Gift className="h-8 w-8 text-orange-400 dark:text-orange-300 opacity-80" />
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

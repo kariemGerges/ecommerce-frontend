@@ -1,3 +1,4 @@
+
 import axios from './axiosInstance';
 
 // fetch all products
@@ -25,6 +26,27 @@ export const fetchPaginatedProducts = async (page = 1, limit = 10) => {
         
     } catch (error) {
         console.error('Error fetching paginated products:', error);
+        throw error;
+    }
+};
+
+// fetch filtered products
+// https://ecommerce-backend-8xv8.onrender.com/products/filtered?category=electronics
+export const fetchFilteredProducts = async ({ queryKey}) => {
+    try {
+        const [_key, { category, brand, price, page, limit }] = queryKey;
+        const response = await axios.get(`/products/filtered`, {
+            params: {
+                category,
+                brand,
+                price,
+                page,
+                limit,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching filtered products:', error);
         throw error;
     }
 };

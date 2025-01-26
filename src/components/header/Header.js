@@ -8,6 +8,8 @@ import {
     MessageCircleQuestion,
     Headset,
     ChevronDown,
+    Clock,
+    MapPin
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ThemeToggleButton from '../../components/ThemeToggleButton/ThemeToggleButton';
@@ -15,6 +17,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import { useLoginAuth } from '../../context/AuthLoginContext';
+import Logo from '../Logo/Logo';
 
 const Header = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -23,8 +26,6 @@ const Header = () => {
     const { setIsCartOpen, cartItems } = useCart();
     const { setIsAuthModalOpen } = useAuth();
     const { user } = useLoginAuth();
-
-    console.log(user);
 
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -40,10 +41,7 @@ const Header = () => {
         setIsMenuOpen(false);
     };
 
-    useEffect(() => {
-        document.body.setAttribute('data-theme', theme);
-    }, [theme]);
-
+    // Handle scroll effect
     useEffect(() => {
         const handleScroll = () => {
             setScrollPosition(window.scrollY);
@@ -52,172 +50,161 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Products', path: '/products' },
-        { name: 'About', path: '/about' },
-        { name: 'Contact', path: '/contact' },
-    ];
+    // Update theme
+    useEffect(() => {
+        document.body.setAttribute('data-theme', theme);
+    }, [theme]);
 
-    const mobileNavLinks = [
-        { name: 'Home', path: '/', icon: <House /> },
-        { name: 'Products', path: '/products', icon: <Wheat /> },
-        { name: 'About', path: '/about', icon: <MessageCircleQuestion /> },
-        { name: 'Contact', path: '/contact', icon: <Headset /> },
+    const navLinks = [
+        { name: 'Home', path: '/', icon: <House className="w-5 h-5" /> },
+        { name: 'Products', path: '/products', icon: <Wheat className="w-5 h-5" /> },
+        { name: 'About', path: '/about', icon: <MessageCircleQuestion className="w-5 h-5" /> },
+        { name: 'Contact', path: '/contact', icon: <Headset className="w-5 h-5" /> }
     ];
 
     return (
         <header
-            className={`fixed w-full z-50 transition-all duration-300 opacity-90 ${
+            className={`fixed w-full z-50 transition-all duration-300 ${
                 scrollPosition > 50
-                    ? 'bg-white dark:bg-[#121212] shadow-lg'
-                    : 'bg-transparent'
+                    ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg'
+                    : 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm'
             }`}
             role="banner"
         >
+            {/* Top bar with store hours and location */}
+            <div className=" bg-emerald-600 dark:bg-emerald-800 text-white py-1">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 text-xs lg:px-8 flex justify-between ">
+                    <div className="flex items-center gap-4">
+                        <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" /> Open: 8AM - 10PM
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" /> 123 Grocery St, City
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>📞 (555) 123-4567</span>
+                    </div>
+                </div>
+            </div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center py-4">
-                    {/* Logo Section */}
-                    <Link
-                        to="/"
-                        className="text-2xl font-bold flex-shrink-0"
-                        aria-label="FreshMart Home"
-                    >
-                        <div className="font-bold text-3xl">
-                            <span className="text-[#2D7A46] dark:text-[#1B4332]">
-                                Fresh
-                            </span>
-                            <span className="text-[#F4A261] dark:text-[#A75D5D]">
-                                Mart
-                            </span>
-                        </div>
-                    </Link>
 
-                    {/* Centered Navigation */}
-                    <nav
-                        className="hidden md:flex flex-1 justify-center space-x-8"
-                        role="navigation"
-                        aria-label="Main navigation"
-                    >
+                    {/* Logo */}
+                    <Logo />
+
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex flex-1 justify-center space-x-4" role="navigation">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className="hover:text-[#2D7A46] hover:xl:text-[#1B4332]
-                                    transition-colors relative group text-lg"
+                                className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-200 
+                                        hover:text-emerald-600 dark:hover:text-emerald-400 
+                                        transition-colors relative group text-sm font-medium"
                             >
+                                {link.icon}
                                 {link.name}
+                                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-600 dark:bg-emerald-400 
+                                            scale-x-0 group-hover:scale-x-100 transition-transform" />
                             </Link>
                         ))}
                     </nav>
 
                     {/* Right Section */}
-                    <div className="flex   items-center space-x-4 flex-shrink-0">
+                    <div className="flex items-center space-x-6">
                         <ThemeToggleButton />
+                        
+                        {/* Mobile Menu Button */}
                         <button
-                            className="md:hidden p-2 rounded-full  hover:bg-gray-100 dark:hover:bg-gray-800"
+                            className="md:hidden p-2 rounded-full  hover:bg-gray-100 dark:hover:bg-gray-800 
+                                    transition-colors"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             aria-expanded={isMenuOpen}
                             aria-label="Toggle menu"
                         >
-                            <TableOfContents size={20} />
+                            <TableOfContents className="w-6 h-6 " />
                         </button>
-                        <div className="hidden md:flex items-center space-x-4">
-                            {!user ? (
-                                <Link
-                                    to="/signin"
-                                    onClick={handleAuthClick}
-                                    className="flex items-center gap-2"
-                                >
-                                    <User size={24} />
-                                    <span>Sign In</span>
-                                    <ChevronDown size={20} />
-                                </Link>
-                            ) : (
-                                <Link
-                                    to="/profile"
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="flex items-center gap-2"
-                                >
-                                    <User size={24} />
-                                    <span>Profile</span>
-                                    <ChevronDown size={20} />
-                                </Link>
-                            )}
-                            {/* Cart Toggle Button with Badge */}
+
+                        {/* Desktop Auth & Cart */}
+                        <div className="hidden md:flex items-center space-x-6">
                             <Link
-                                to="/cart"
-                                onClick={handleCartClick}
-                                className="flex items-center gap-2"
+                                to={user ? '/profile' : '/signin'}
+                                onClick={user ? undefined : handleAuthClick}
+                                className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-200 
+                                        hover:text-emerald-600 dark:hover:text-emerald-400 
+                                        transition-colors relative group text-sm font-medium"
                             >
-                                <ShoppingCart size={24} />
+                                <User className="w-5 h-5" />
+                                <span>{user ? user.name : 'Sign In'}</span>
+                                <ChevronDown className="w-4 h-4" />
+                            </Link>
+
+                            <button
+                                onClick={handleCartClick}
+                                className="flex items-center gap-2 px-3 py-2 text-gray-700 dark:text-gray-200 
+                                        hover:text-emerald-600 dark:hover:text-emerald-400 
+                                        transition-colors relative group text-sm font-medium"
+                            >
+                                <ShoppingCart className="w-5 h-5" />
+                                <span>Cart</span>
+                                <ChevronDown className="w-4 h-4" />
                                 {totalItems > 0 && (
-                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-bounce">
+                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs 
+                                                rounded-full h-5 w-5 flex items-center justify-center">
                                         {totalItems}
                                     </span>
                                 )}
-                                <span>Cart</span>
-                                <ChevronDown size={20} />
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile menu */}
+            {/* Mobile Menu */}
             {isMenuOpen && (
                 <nav
-                    className={`md:hidden ${
-                        theme === 'light'
-                            ? 'bg-gray-50 rounded-3xl'
-                            : 'bg-gray-900 rounded-3xl'
-                    }`}
+                    className="md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-800"
                     role="navigation"
-                    aria-label="Mobile navigation"
                 >
-                    <div className="px-2 pt-2 pb-3 space-y-1">
-                        {mobileNavLinks.map((link) => (
+                    <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
+                        {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+                                className="flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-200 
+                                        hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                <span className="flex items-center gap-2">
-                                    {link.icon} {link.name}
-                                </span>
+                                {link.icon}
+                                {link.name}
                             </Link>
                         ))}
-                        {!user ? (
-                            <Link
-                                to="/signin"
-                                onClick={handleAuthClick}
-                                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
-                            >
-                                <span className="flex items-center gap-2">
-                                    <User size={24} /> Sign In
-                                </span>
-                            </Link>
-                        ) : (
-                            <Link
-                                to="/profile"
-                                onClick={() => setIsMenuOpen(false)}
-                                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
-                            >
-                                <span className="flex items-center gap-2">
-                                    <User size={24} /> Profile
-                                </span>
-                            </Link>
-                        )}
+                        <hr className="my-2 border-gray-200 dark:border-gray-700" />
+
                         <Link
-                            to="/cart"
-                            onClick={handleCartClick}
-                            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+                            to={user ? '/profile' : '/signin'}
+                            onClick={user ? () => setIsMenuOpen(false) : handleAuthClick}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-200 
+                                    hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                         >
-                            <span className="flex items-center gap-2">
-                                <ShoppingCart size={24} /> Cart
-                            </span>
+                            <User className="w-5 h-5" />
+                            {user ? user.name : 'Sign In'}
+                            <ChevronDown className="w-4 h-4" />
                         </Link>
+
+                        <button
+                            onClick={handleCartClick}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-200 
+                                    hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                        >
+                            <ShoppingCart className="w-5 h-5" />
+                            Cart ({totalItems})
+                            <ChevronDown className="w-4 h-4" />
+
+                        </button>
+
                     </div>
                 </nav>
             )}
@@ -226,3 +213,232 @@ const Header = () => {
 };
 
 export default Header;
+
+// import React, { useContext, useState, useEffect } from 'react';
+// import {
+//     TableOfContents,
+//     User,
+//     ShoppingCart,
+//     House,
+//     Wheat,
+//     MessageCircleQuestion,
+//     Headset,
+//     ChevronDown,
+// } from 'lucide-react';
+// import { Link } from 'react-router-dom';
+// import ThemeToggleButton from '../../components/ThemeToggleButton/ThemeToggleButton';
+// import { ThemeContext } from '../../context/ThemeContext';
+// import { useCart } from '../../context/CartContext';
+// import { useAuth } from '../../context/AuthContext';
+// import { useLoginAuth } from '../../context/AuthLoginContext';
+
+// const Header = () => {
+//     const [scrollPosition, setScrollPosition] = useState(0);
+//     const [isMenuOpen, setIsMenuOpen] = useState(false);
+//     const { theme } = useContext(ThemeContext);
+//     const { setIsCartOpen, cartItems } = useCart();
+//     const { setIsAuthModalOpen } = useAuth();
+//     const { user } = useLoginAuth();
+
+//     console.log(user);
+
+//     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+//     const handleCartClick = (e) => {
+//         e.preventDefault();
+//         setIsCartOpen(true);
+//         setIsMenuOpen(false);
+//     };
+
+//     const handleAuthClick = (e) => {
+//         e.preventDefault();
+//         setIsAuthModalOpen(true);
+//         setIsMenuOpen(false);
+//     };
+
+//     useEffect(() => {
+//         document.body.setAttribute('data-theme', theme);
+//     }, [theme]);
+
+//     useEffect(() => {
+//         const handleScroll = () => {
+//             setScrollPosition(window.scrollY);
+//         };
+//         window.addEventListener('scroll', handleScroll);
+//         return () => window.removeEventListener('scroll', handleScroll);
+//     }, []);
+
+//     const navLinks = [
+//         { name: 'Home', path: '/' },
+//         { name: 'Products', path: '/products' },
+//         { name: 'About', path: '/about' },
+//         { name: 'Contact', path: '/contact' },
+//     ];
+
+//     const mobileNavLinks = [
+//         { name: 'Home', path: '/', icon: <House /> },
+//         { name: 'Products', path: '/products', icon: <Wheat /> },
+//         { name: 'About', path: '/about', icon: <MessageCircleQuestion /> },
+//         { name: 'Contact', path: '/contact', icon: <Headset /> },
+//     ];
+
+//     return (
+//         <header
+//             className={`fixed w-full z-50 transition-all duration-300 opacity-90 ${
+//                 scrollPosition > 50
+//                     ? 'bg-white dark:bg-[#121212] shadow-lg'
+//                     : 'bg-transparent'
+//             }`}
+//             role="banner"
+//         >
+//             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//                 <div className="flex justify-between items-center py-4">
+//                     {/* Logo Section */}
+//                     <Link
+//                         to="/"
+//                         className="text-2xl font-bold flex-shrink-0"
+//                         aria-label="FreshMart Home"
+//                     >
+//                         <div className="font-bold text-3xl">
+//                             <span className="text-[#2D7A46] dark:text-[#1B4332]">
+//                                 Fresh
+//                             </span>
+//                             <span className="text-[#F4A261] dark:text-[#A75D5D]">
+//                                 Mart
+//                             </span>
+//                         </div>
+//                     </Link>
+
+//                     {/* Centered Navigation */}
+//                     <nav
+//                         className="hidden md:flex flex-1 justify-center space-x-8"
+//                         role="navigation"
+//                         aria-label="Main navigation"
+//                     >
+//                         {navLinks.map((link) => (
+//                             <Link
+//                                 key={link.name}
+//                                 to={link.path}
+//                                 className="hover:text-[#2D7A46] hover:xl:text-[#1B4332]
+//                                     transition-colors relative group text-lg"
+//                             >
+//                                 {link.name}
+//                             </Link>
+//                         ))}
+//                     </nav>
+
+//                     {/* Right Section */}
+//                     <div className="flex   items-center space-x-4 flex-shrink-0">
+//                         <ThemeToggleButton />
+//                         <button
+//                             className="md:hidden p-2 rounded-full  hover:bg-gray-100 dark:hover:bg-gray-800"
+//                             onClick={() => setIsMenuOpen(!isMenuOpen)}
+//                             aria-expanded={isMenuOpen}
+//                             aria-label="Toggle menu"
+//                         >
+//                             <TableOfContents size={20} />
+//                         </button>
+//                         <div className="hidden md:flex items-center space-x-4">
+//                             {!user ? (
+//                                 <Link
+//                                     to="/signin"
+//                                     onClick={handleAuthClick}
+//                                     className="flex items-center gap-2"
+//                                 >
+//                                     <User size={24} />
+//                                     <span>Sign In</span>
+//                                     <ChevronDown size={20} />
+//                                 </Link>
+//                             ) : (
+//                                 <Link
+//                                     to="/profile"
+//                                     onClick={() => setIsMenuOpen(false)}
+//                                     className="flex items-center gap-2"
+//                                 >
+//                                     <User size={24} />
+//                                     <span>Profile</span>
+//                                     <ChevronDown size={20} />
+//                                 </Link>
+//                             )}
+//                             {/* Cart Toggle Button with Badge */}
+//                             <Link
+//                                 to="/cart"
+//                                 onClick={handleCartClick}
+//                                 className="flex items-center gap-2"
+//                             >
+//                                 <ShoppingCart size={24} />
+//                                 {totalItems > 0 && (
+//                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-bounce">
+//                                         {totalItems}
+//                                     </span>
+//                                 )}
+//                                 <span>Cart</span>
+//                                 <ChevronDown size={20} />
+//                             </Link>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+
+//             {/* Mobile menu */}
+//             {isMenuOpen && (
+//                 <nav
+//                     className={`md:hidden ${
+//                         theme === 'light'
+//                             ? 'bg-gray-50 rounded-3xl'
+//                             : 'bg-gray-900 rounded-3xl'
+//                     }`}
+//                     role="navigation"
+//                     aria-label="Mobile navigation"
+//                 >
+//                     <div className="px-2 pt-2 pb-3 space-y-1">
+//                         {mobileNavLinks.map((link) => (
+//                             <Link
+//                                 key={link.name}
+//                                 to={link.path}
+//                                 className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+//                                 onClick={() => setIsMenuOpen(false)}
+//                             >
+//                                 <span className="flex items-center gap-2">
+//                                     {link.icon} {link.name}
+//                                 </span>
+//                             </Link>
+//                         ))}
+//                         {!user ? (
+//                             <Link
+//                                 to="/signin"
+//                                 onClick={handleAuthClick}
+//                                 className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+//                             >
+//                                 <span className="flex items-center gap-2">
+//                                     <User size={24} /> Sign In
+//                                 </span>
+//                             </Link>
+//                         ) : (
+//                             <Link
+//                                 to="/profile"
+//                                 onClick={() => setIsMenuOpen(false)}
+//                                 className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+//                             >
+//                                 <span className="flex items-center gap-2">
+//                                     <User size={24} /> Profile
+//                                 </span>
+//                             </Link>
+//                         )}
+//                         <Link
+//                             to="/cart"
+//                             onClick={handleCartClick}
+//                             className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
+//                         >
+//                             <span className="flex items-center gap-2">
+//                                 <ShoppingCart size={24} /> Cart
+//                             </span>
+//                         </Link>
+//                     </div>
+//                 </nav>
+//             )}
+//         </header>
+//     );
+// };
+
+// export default Header;

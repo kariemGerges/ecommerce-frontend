@@ -11,7 +11,9 @@ export const AuthLoginProvider = ({ children }) => {
     const [loading, setLoading] = useState(true); // Loading state for profile check
 
     // Fetch the user profile on app load
-    const { data, isError, isLoading, refetch } = useQuery({
+    // that what it looks like before     
+    // const { data, isError, isLoading, refetch } = useQuery({
+    const { refetch } = useQuery({
         queryKey: ['userProfile'], // unique query key
         queryFn: getUserProfile, // function to fetch user profile
         onSuccess: (data) => {

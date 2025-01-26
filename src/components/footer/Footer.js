@@ -1,6 +1,7 @@
 import {
     Heart,
     Mail,
+    Headset,
     Phone,
     MapPin,
     Facebook,
@@ -13,143 +14,149 @@ import {
     ShoppingCart,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Logo from '../Logo/Logo';
+import { useLoginAuth } from '../../context/AuthLoginContext';
+import { useAuth } from '../../context/AuthContext';
+
+
 
 const Footer = () => {
-    const navLinks = [
-        { name: 'Home', path: '/', icon: <House size={16} /> },
-        { name: 'Products', path: '/products', icon: <Salad size={16} /> },
-        {
-            name: 'About',
-            path: '/about',
-            icon: <MessageCircleQuestion size={16} />,
-        },
-        { name: 'Contact', path: '/contact', icon: <Mail size={16} /> },
-        { name: 'Profile', path: '/profile', icon: <UserRoundPen size={16} /> },
-        { name: 'Cart', path: '/cart', icon: <ShoppingCart size={16} /> },
-    ];
 
+    const { user } = useLoginAuth();
+    const { setIsAuthModalOpen } = useAuth();
+    
+
+    const navLinks = [
+        { name: 'Home', path: '/', icon: <House className="w-4 h-4" /> },
+        { name: 'Products', path: '/products', icon: <Salad className="w-4 h-4" /> },
+        { name: 'About', path: '/about', icon: <MessageCircleQuestion className="w-4 h-4" /> },
+        { name: 'Contact', path: '/contact', icon: <Headset className="w-4 h-4" /> },
+        { name: `${user ? user.name : 'Sign In'}`, path: `${user ? '/profile' : '/'}`, icon: <UserRoundPen className="w-4 h-4" /> },
+        { name: 'Cart', path: '/cart', icon: <ShoppingCart className="w-4 h-4" /> },
+    ];
+    
     const groupedLinks = [];
     for (let i = 0; i < navLinks.length; i += 3) {
         groupedLinks.push(navLinks.slice(i, i + 3));
     }
 
+    // const handleClick = () => {
+    //     user ? setIsAuthModalOpen(true) : setIsAuthModalOpen(false);
+    // }
+
     return (
-        <footer className="bottom-0 w-full pb-5 pt-5">
-            <div className="py-5 pb-5"></div>
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <footer className="w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8">
+                    {/* Brand Section */}
                     <div className="space-y-4">
-                        <div className="flex-shrink-0 font-bold text-3xl">
-                            <span className="text-[#2D7A46] dark:text-[#1B4332]">
-                                Fresh
-                            </span>
-                            <span className="text-[#F4A261] dark:text-[#A75D5D]">
-                                Mart
-                            </span>
-                        </div>
-                        <p className="text-sm">
+                        <Logo />
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
                             Enjoy authentic Egyptian flavors
                         </p>
-                        <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
+                        <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 group">
                             <Heart
-                                className="text-red-400 animate-pulse"
-                                size={20}
+                                className="text-red-400 animate-pulse w-4 h-4 sm:w-5 sm:h-5"
                             />
-                            <span>Try our delicious products today</span>
+                            <span className="group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                Try our delicious products today
+                            </span>
                         </div>
                     </div>
 
+                    {/* Contact Section */}
                     <div className="space-y-4">
-                        <h4 className="text-xl font-semibold">Contact Us</h4>
-                        <div className="space-y-2">
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <Mail size={16} />
-                                <a
-                                    href="mailto:info@donationpal.com"
-                                    className="hover:underline"
-                                >
-                                    info@freshmart.com
-                                </a>
-                            </div>
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <Phone size={16} />
-                                <a
-                                    href="tel:+1234567890"
-                                    className="hover:underline"
-                                >
-                                    +1 (234) 567-890
-                                </a>
-                            </div>
-                            <div className="flex items-center space-x-2 transition-transform hover:translate-x-1">
-                                <MapPin size={16} />
-                                <span>
-                                    123 Charity Lane, westfield, IN 46074
-                                </span>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Contact Us</h4>
+                        <div className="space-y-3">
+                            <a
+                                href="mailto:info@freshmart.com"
+                                className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            >
+                                <Mail className="w-4 h-4" />
+                                <span>info@freshmart.com</span>
+                            </a>
+                            <a
+                                href="tel:+1234567890"
+                                className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            >
+                                <Phone className="w-4 h-4" />
+                                <span>+1 (234) 567-890</span>
+                            </a>
+                            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+                                <MapPin className="w-4 h-4 flex-shrink-0" />
+                                <span>123 Charity Lane, westfield, IN 46074</span>
                             </div>
                         </div>
                     </div>
 
+                    {/* Social Media Section */}
                     <div className="space-y-4">
-                        <h4 className="text-xl font-semibold">Follow Us</h4>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Follow Us</h4>
                         <div className="flex space-x-4">
-                            <button
-                                className="transform transition-transform hover:scale-110"
-                                onClick={() =>
-                                    (window.location.href =
-                                        'https://www.facebook.com')
-                                }
+                            <a
+                                href="https://www.facebook.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                aria-label="Facebook"
                             >
-                                <Facebook size={24} />
-                            </button>
-                            <button
-                                className="transform transition-transform hover:scale-110"
-                                onClick={() =>
-                                    (window.location.href =
-                                        'https://www.twitter.com')
-                                }
+                                <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
+                            </a>
+                            <a
+                                href="https://www.twitter.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                aria-label="Twitter"
                             >
-                                <Twitter size={24} />
-                            </button>
-                            <button
-                                className="transform transition-transform hover:scale-110"
-                                onClick={() =>
-                                    (window.location.href =
-                                        'https://www.instagram.com')
-                                }
+                                <Twitter className="w-5 h-5 sm:w-6 sm:h-6" />
+                            </a>
+                            <a
+                                href="https://www.instagram.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                aria-label="Instagram"
                             >
-                                <Instagram size={24} />
-                            </button>
+                                <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
+                            </a>
                         </div>
                     </div>
 
+                    {/* Quick Links Section */}
                     <div className="space-y-4">
-                        <h4 className="text-xl font-semibold">Links</h4>
-                        <div className="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-3 space-x-9 gap-4">
-                            {groupedLinks.map((group, colIndex) => (
-                                <div key={colIndex} className="space-y-2">
-                                    {group.map((link, index) => (
-                                        <Link
-                                            key={index}
-                                            to={link.path}
-                                            className="flex items-center space-x-2 transition-transform hover:translate-x-1"
-                                        >
-                                            <span>{link.icon}</span>
-                                            <span>{link.name}</span>
-                                        </Link>
-                                    ))}
-                                </div>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Quick Links</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                            {navLinks.map((link, index) => (
+                                <Link
+                                    key={index}
+                                    to={link.path}
+                                    aria-label={link.label}
+                                    onClick={
+                                        link.name === 'Sign In' || link.name === 'Profile'
+                                            ? () => setIsAuthModalOpen(true)
+                                            : () => {}
+                                    }
+                                    className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                >
+                                    {link.icon}
+                                    <span>{link.name}</span>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-green-900/30 text-center">
-                    <p className="text-sm">
-                        &copy; {new Date().getFullYear()} Fresh Mart. All rights
-                        reserved.
-                    </p>
-                    <br />
-                    <p className="text-sm">Made with ❤️ by Kariem Gerges.</p>
+                {/* Footer Bottom */}
+                <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                            &copy; {new Date().getFullYear()} Fresh Mart. All rights reserved.
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                            Made with <span className="text-red-400">❤️</span> by Kariem Gerges
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>

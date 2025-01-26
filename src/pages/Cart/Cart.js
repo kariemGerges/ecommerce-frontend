@@ -31,7 +31,7 @@ import { CircleDollarSign } from 'lucide-react';
 
 const ShoppingCart = () => {
     return (
-        <div className="max-w-6xl mx-auto pt-16  flex flex-col lg:flex-row gap-8">
+        <div className="pt-12 max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
             {/* Cart Items Section */}
             <div className="flex-1 pt-16 px-6">
                 <div className="flex justify-between items-center mb-6">

@@ -2,7 +2,7 @@
 import { Heart } from 'lucide-react';
 
 // import hooks
-import { usePaginatedProducts } from '../../hooks/products/useProductsPagenate';
+import { useFilteredProducts } from '../../hooks/products/useFilteredProducts';
 
 // import components
 import Loading from '../Loading/Loading';
@@ -12,10 +12,17 @@ import image from '../../assets/vegetables_opengraph.jpg';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useState } from 'react';
+import NoProductsFound from './NotProductsFound';
 
-const RightSideProductSection = () => {
+const RightSideProductSection = ({ filters }) => {
+    console.log('filters 3 from the right side:', filters);
+
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError, error } = usePaginatedProducts(page, 10);
+    const { data, isLoading, isError, error } = useFilteredProducts(
+        filters,
+        page,
+        12
+    );
 
     if (isLoading)
         return (
@@ -25,13 +32,28 @@ const RightSideProductSection = () => {
         );
     if (isError)
         return (
-            <p className='flex flex-col items-center justify-center'>
-                <Error /> {error.message === 'Network Error' ? 'Network Error' : '404'}
+            <p className="flex flex-col items-center justify-center">
+                <Error />{' '}
+                {/* {error.message === 'Network Error' ? 'Network Error' : '404'} */}
+                {error.name }{ error.message}{error.stack}
             </p>
         );
 
-    const { products, currentPage, totalPages, hasNextPage, hasPreviousPage } =
-        data;
+    const {
+        products,
+        totalProducts,
+        currentPage,
+        totalPages,
+        hasNextPage,
+        hasPreviousPage,
+    } = data;
+
+    if (!products.length)
+        return (
+            <div className="flex flex-col items-center justify-center">
+                <NoProductsFound />
+            </div>
+        );
 
     return (
         <section>
@@ -46,8 +68,9 @@ const RightSideProductSection = () => {
                     <option>Price: High to Low</option>
                 </select>
             </div>
+
             {/* Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-4">
                 {products &&
                     products.map((product, i) => (
                         <div
@@ -85,6 +108,7 @@ const RightSideProductSection = () => {
                 totalPages={totalPages}
                 hasNextPage={hasNextPage}
                 hasPreviousPage={hasPreviousPage}
+                totalProducts={totalProducts}
                 setPage={setPage}
             />
         </section>

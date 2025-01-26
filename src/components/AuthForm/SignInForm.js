@@ -10,34 +10,10 @@ const SignInForm = ({ setIsAuthModalOpen }) => {
     const [authError, setAuthError] = useState('');
     const mutation = useLoginUser();
 
-    // const {
-    //     mutate: login,
-    //     isLoading,
-    //     isError,
-    // } = useLoginUser({
-    //     onSuccess: (data) => {
-    //         // console.log('Login successful:', data);
-    //         // console.log('User profile:', login);
-    //         setAuthError('');
-    //         navigate('/profile');
-    //         setIsAuthModalOpen(false);
-    //     },
-    //     onError: (error) => {
-    //         const message = error.response?.data?.message || error.message;
-    //         console.error('Login error:', error);
-    //         setAuthError(message);
-    //     },
-    // });
-
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
-
-    // const handleInputChange = (e) => {
-    //     e.preventDefault();
-    //     login(form); // trigger the login mutation
-    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -92,7 +68,7 @@ const SignInForm = ({ setIsAuthModalOpen }) => {
                 </div>
             </div>
             <p className="text-red-500 text-sm justify-center text-center ">
-                {mutation.isError && `${authError}`}
+                {mutation.isError && `${authError}` }
             </p>
             <button
                 type="submit"

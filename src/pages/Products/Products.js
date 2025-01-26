@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 // import components
-import HeaderSection from '../../components/Products/HeaderSection';
+// import HeaderSection from '../../components/Products/HeaderSection';
 import RightSideProductSection from '../../components/Products/RightSideProductSection';
 import LeftSideFilterSection from '../../components/Products/LeftSideFilterSection';
 import MobileSideMenuSection from '../../components/Products/MobileSideMenuSection';
@@ -10,21 +10,38 @@ const StorePage = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSubmenu, setActiveSubmenu] = useState(null);
 
+    // state to hold the selected filters(categories, brands, and price)
+    const [selectedFilters, setSelectedFilters] = useState({
+        category: [],
+        brand: [],
+        price: [],
+    });
+
+    console.log('filters 1 products page', selectedFilters);
+
+    // callback function to update the selected filters
+    const handleFilterChange = (newFilters) => {
+        setSelectedFilters(newFilters);
+    };
+
     return (
         <div className="min-h-screen">
             {/* Header */}
-            <HeaderSection setIsMenuOpen={setIsMenuOpen} />
+            {/* <HeaderSection setIsMenuOpen={setIsMenuOpen} /> */}
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 py-8">
+            <main className="max-w-7xl mx-auto pt-24 px-4 py-8">
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Filters Sidebar on the left side*/}
-                    <LeftSideFilterSection />
+                    <LeftSideFilterSection
+                        onFilterChange={handleFilterChange} // callback prop
+                        currentFilters={selectedFilters}
+                    />
 
                     {/* Product Grid on the right side*/}
                     <div className="flex-1">
                         {/* Header and product grid */}
-                        <RightSideProductSection />
+                        <RightSideProductSection filters={selectedFilters} />
                     </div>
                 </div>
             </main>

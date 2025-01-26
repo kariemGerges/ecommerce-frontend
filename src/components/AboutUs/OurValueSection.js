@@ -4,7 +4,6 @@ import { HandHeart, Sprout, ShieldCheck } from 'lucide-react';
 const OurValueSection = () => {
     const [activeValue, setActiveValue] = useState(0);
 
-
     const values = [
         {
             icon: HandHeart,

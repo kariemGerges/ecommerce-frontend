@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 const CallToActionSection = () => {
     return (
         <section>
@@ -16,9 +17,12 @@ const CallToActionSection = () => {
                         FreshMart. Quality products, innovative technology, and
                         sustainable practices - all in one place.
                     </p>
-                    <button className="bg-[#2D7A46] dark:bg-[#1B4332] text-white px-8 py-4 rounded-full font-semibold hover:opacity-90 transition-opacity">
+                    <Link
+                        to="/products"
+                        className="bg-[#2D7A46] dark:bg-[#1B4332] text-white px-8 py-4 rounded-full font-semibold hover:opacity-90 transition-opacity"
+                    >
                         Shop Now
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>

@@ -102,7 +102,7 @@ const ContactInformationSection = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-[#2D7A46] dark:bg-[#1B4332] text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center justify-center space-x-2"
+                                className="w-full bg-[#2D7A46] dark:bg-[#1B4332] text-white px-8 py-4 rounded-lg font-bold hover:opacity-90 transition-opacity flex items-center justify-center space-x-2"
                             >
                                 <span>Send Message</span>
                                 <Send size={20} />
@@ -113,14 +113,14 @@ const ContactInformationSection = () => {
                     {/* Contact Information */}
                     <div className="space-y-8">
                         <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl">
-                            <h3 className="text-2xl font-semibold mb-6 text-white">
+                            <h3 className="text-2xl font-bold mb-6 text-white">
                                 Contact Information
                             </h3>
                             <div className="space-y-6">
                                 <div className="flex items-start space-x-4">
-                                    <MapPin className="w-6 h-6 text-[#2D7A46] dark:text-[#1B4332] flex-shrink-0" />
+                                    <MapPin className="w-6 h-6 text-yellow-400 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold mb-1 text-gray-400">
+                                        <h4 className="font-bold mb-1 text-gray-300 underline text-lg">
                                             Store Location
                                         </h4>
                                         <p className="text-gray-600 dark:text-gray-300">
@@ -132,9 +132,9 @@ const ContactInformationSection = () => {
                                 </div>
 
                                 <div className="flex items-start space-x-4">
-                                    <Phone className="w-6 h-6 text-[#2D7A46] dark:text-[#1B4332] flex-shrink-0" />
+                                    <Phone className="w-6 h-6 text-yellow-400 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold mb-1 text-gray-400">
+                                        <h4 className="font-bold mb-1 text-gray-300 underline text-lg ">
                                             Phone Numbers
                                         </h4>
                                         <p className="text-gray-600 dark:text-gray-300">
@@ -146,9 +146,9 @@ const ContactInformationSection = () => {
                                 </div>
 
                                 <div className="flex items-start space-x-4">
-                                    <Mail className="w-6 h-6 text-[#2D7A46] dark:text-[#1B4332] flex-shrink-0" />
+                                    <Mail className="w-6 h-6 text-yellow-400 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold mb-1 text-gray-400">
+                                        <h4 className="font-bold mb-1 text-gray-300 underline text-lg">
                                             Email Addresses
                                         </h4>
                                         <p className="text-gray-600 dark:text-gray-300">
@@ -160,9 +160,9 @@ const ContactInformationSection = () => {
                                 </div>
 
                                 <div className="flex items-start space-x-4">
-                                    <Clock className="w-6 h-6 text-[#2D7A46] dark:text-[#1B4332] flex-shrink-0" />
+                                    <Clock className="w-6 h-6 text-yellow-400 flex-shrink-0" />
                                     <div>
-                                        <h4 className="font-semibold mb-1 text-gray-400">
+                                        <h4 className="font-bold mb-1 text-gray-300 underline text-lg">
                                             Business Hours
                                         </h4>
                                         <p className="text-gray-600 dark:text-gray-300">
@@ -177,7 +177,7 @@ const ContactInformationSection = () => {
 
                         {/* Social Media */}
                         <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl">
-                            <h3 className="text-2xl font-semibold mb-6 text-white">
+                            <h3 className="text-2xl font-bold mb-6 text-white">
                                 Follow Us
                             </h3>
                             <div className="flex space-x-4">
@@ -200,14 +200,14 @@ const ContactInformationSection = () => {
 
                         {/* FAQ Link */}
                         <div className="bg-[#2D7A46] dark:bg-[#1B4332] p-8 rounded-2xl text-white">
-                            <h3 className="text-2xl font-semibold mb-4">
+                            <h3 className="text-2xl font-bold mb-4">
                                 Have Questions?
                             </h3>
                             <p className="mb-6 text-white/90">
                                 Check our frequently asked questions for quick
                                 answers to common queries.
                             </p>
-                            <button className="bg-white text-[#2D7A46] dark:text-[#1B4332] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity flex items-center space-x-2">
+                            <button className="bg-white text-yellow-400 px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity flex items-center space-x-2">
                                 <span>Visit FAQ</span>
                                 <ChevronRight size={20} />
                             </button>

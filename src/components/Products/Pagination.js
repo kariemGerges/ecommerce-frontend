@@ -5,6 +5,7 @@ const Pagination = ({
     totalPages,
     hasPreviousPage,
     hasNextPage,
+    totalProducts,
     setPage,
 }) => {
     return (
@@ -38,6 +39,8 @@ const Pagination = ({
             >
                 Next
             </button>
+            <div className="">{totalProducts} Products</div>
+
         </div>
     );
 };
