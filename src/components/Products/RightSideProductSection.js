@@ -1,28 +1,35 @@
 // This component is used to display the products on the right side of the page and the header filter (Best match, Price: Low to High, Price: High to Low)
 import { Heart } from 'lucide-react';
-
 // import hooks
 import { useFilteredProducts } from '../../hooks/products/useFilteredProducts';
+import { useCart } from '../../context/CartContext';
+import { useState } from 'react';
 
 // import components
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import Pagination from '../Products/Pagination';
 import image from '../../assets/vegetables_opengraph.jpg';
-
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useState } from 'react';
 import NoProductsFound from './NotProductsFound';
 
-const RightSideProductSection = ({ filters }) => {
-    console.log('filters 3 from the right side:', filters);
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
+const RightSideProductSection = ({ filters }) => {
     const [page, setPage] = useState(1);
     const { data, isLoading, isError, error } = useFilteredProducts(
         filters,
         page,
         12
     );
+
+    const { addToCart } = useCart();
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const addToCartBannerHandler = () => {
+        setIsVisible(true);
+        setTimeout(() => setIsVisible(false), 3000);
+    };
 
     if (isLoading)
         return (
@@ -35,7 +42,9 @@ const RightSideProductSection = ({ filters }) => {
             <p className="flex flex-col items-center justify-center">
                 <Error />{' '}
                 {/* {error.message === 'Network Error' ? 'Network Error' : '404'} */}
-                {error.name }{ error.message}{error.stack}
+                {error.name}
+                {error.message}
+                {error.stack}
             </p>
         );
 
@@ -94,9 +103,39 @@ const RightSideProductSection = ({ filters }) => {
                                         ${product.price}
                                     </span>
                                 </div>
-                                <button className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white rounded-full py-2">
+                                <button
+                                    onClick={() => {
+                                        addToCart(product);
+                                        addToCartBannerHandler();
+                                    }}
+                                    className="w-full bg-[#2D7A46] hover:dark:bg-[#1B4332] text-white rounded-full py-2"
+                                >
                                     Add to Cart
                                 </button>
+
+                                {isVisible && (
+                                    <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg animate-bounce-in">
+                                        <div className="flex items-center space-x-2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-6 w-6 animate-pulse"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                />
+                                            </svg>
+                                            <span className="animate-wiggle">
+                                                Item Added to Cart!
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

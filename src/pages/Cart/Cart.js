@@ -1,92 +1,117 @@
-// import React from 'react';
-// import { useCart } from '../../context/CartContext';
-
-// const CartPage = () => {
-//     const { cartItems } = useCart();
-
-//     return (
-//         <div className="max-w-4xl mx-auto p-4">
-//             <h1 className="text-2xl font-semibold mb-4">Your Cart</h1>
-
-//             {cartItems.length > 0 ? (
-//                 <ul>
-//                     {cartItems.map((item, index) => (
-//                         <li key={index} className="flex justify-between items-center mb-4">
-//                             <span>{item.name}</span>
-//                             <span>${item.price.toFixed(2)}</span>
-//                         </li>
-//                     ))}
-//                 </ul>
-//             ) : (
-//                 <p>Your cart is empty.</p>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default CartPage;
-
 import React from 'react';
-import { CircleDollarSign } from 'lucide-react';
+import { CircleDollarSign, Plus, Minus, Trash2 } from 'lucide-react';
+// import context
+import { useCart } from '../../context/CartContext';
+
+import itemImg from '../../assets/item.jpg';
 
 const ShoppingCart = () => {
+    const {
+        cartItems,
+        removeFromCart,
+        emptyCart,
+        incrementQuantity,
+        decrementQuantity,
+        getTotalPrice,
+    } = useCart();
+
+    const pickupFee = getTotalPrice() > 20 ? 0 : 4.95;
+    // const discounts = 80;
+
     return (
         <div className="pt-12 max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
             {/* Cart Items Section */}
             <div className="flex-1 pt-16 px-6">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Your Cart</h1>
-                    <button className="text-red-500 hover:underline">
+                    <button
+                        onClick={emptyCart}
+                        className="text-red-500 hover:underline"
+                    >
                         Empty Cart
                     </button>
                 </div>
 
                 <div className="mb-4">
-                    <span className="font-medium">1 Item</span>
+                    <span className="font-medium">{cartItems.length} Item</span>
                 </div>
 
                 {/* Cart Item */}
-                <div className="border-t border-b py-4">
-                    <div className="flex gap-4">
-                        <img
-                            src="/api/placeholder/120/120"
-                            alt="Lucky Charms"
-                            className="w-24 h-24 object-contain"
-                        />
-                        <div className="flex-1">
-                            <div className="flex justify-between">
-                                <div>
-                                    <h3 className="font-medium mb-1">
-                                        Lucky Charms Gluten Free Breakfast
-                                        Cereal, 10.5 oz Box
-                                    </h3>
-                                    <p className="text-gray-600 text-sm">
-                                        1 at $3.69 each
-                                    </p>
-                                    <p className="font-medium mt-2">$3.69</p>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="border rounded-full w-10 h-10 flex items-center justify-center">
-                                        <input
-                                            type="number"
-                                            value="1"
-                                            className="w-8 text-center focus:outline-none"
-                                            min="1"
-                                        />
+                {cartItems.length > 0 ? (
+                    <div className="border-t border-b py-4">
+                        {cartItems.map((item, index) => (
+                            <div className="flex gap-4">
+                                <img
+                                    src={itemImg}
+                                    alt={item.name}
+                                    className="w-24 h-24 object-contain rounded-3xl"
+                                />
+                                <div className="flex-1">
+                                    <div className="flex justify-between">
+                                        <div>
+                                            <h3 className="font-medium mb-1">
+                                                {item.name}
+                                            </h3>
+
+                                            <p className="text-gray-600 text-sm">
+                                                1 at ${item.price} each
+                                            </p>
+                                            <p className="font-medium mt-2">
+                                                $
+                                                {(
+                                                    item.price * item.quantity
+                                                ).toFixed(2)}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-start gap-4">
+                                            <div className="border rounded-full w-10 h-10 flex items-center justify-center">
+                                                <input
+                                                    type="number"
+                                                    value={item.quantity}
+                                                    className="w-8 text-center focus:outline-none"
+                                                    min="1"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div className="flex items-center space-x-2 mt-2">
+                                        <button
+                                            onClick={() =>
+                                                decrementQuantity(item._id)
+                                            }
+                                            className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
+                                        >
+                                            <Minus className="h-4 w-4" />
+                                        </button>
+                                        <span className="w-8 text-center">
+                                            {item.quantity}
+                                        </span>
+                                        <button
+                                            onClick={() =>
+                                                incrementQuantity(item._id)
+                                            }
+                                            className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
+                                        >
+                                            <Plus className="h-4 w-4" />
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                removeFromCart(item._id)
+                                            }
+                                            className="p-1 hover:bg-red-100 text-red-600 rounded ml-2 transition-colors duration-200"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                    <hr className="my-4 bg-green" />
                                 </div>
                             </div>
-                            <div className="flex gap-4 mt-4">
-                                <button className="text-blue-600 hover:underline text-sm">
-                                    Remove
-                                </button>
-                                <button className="text-blue-600 hover:underline text-sm">
-                                    Add Note
-                                </button>
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                </div>
+                ) : (
+                    <p className="text-gray-600">Your cart is empty.</p>
+                )}
             </div>
 
             {/* Order Summary Section */}
@@ -112,23 +137,27 @@ const ShoppingCart = () => {
                     <div className="space-y-3 mb-6">
                         <div className="flex justify-between">
                             <span>Item Total</span>
-                            <span>$3.69</span>
+                            <span>{getTotalPrice().toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between">
                             <span>Pickup Fee</span>
-                            <span>$4.95</span>
+                            <span>${pickupFee}</span>
                         </div>
-                        <div className="flex justify-between">
-                            <span>Deposit</span>
-                            <span>$0.00</span>
-                        </div>
+
                         <div className="flex justify-between">
                             <span>Taxes</span>
-                            <span>$0.00</span>
+                            <span>${(getTotalPrice() * 0.07).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between font-medium pt-2 border-t">
                             <span>Subtotal</span>
-                            <span>$8.64</span>
+                            <span>
+                                $
+                                {(
+                                    getTotalPrice() +
+                                    pickupFee +
+                                    getTotalPrice() * 0.07
+                                ).toFixed(2)}
+                            </span>
                         </div>
 
                         {/* Savings Section */}
@@ -146,7 +175,17 @@ const ShoppingCart = () => {
                         {/* Estimated Total */}
                         <div className="flex justify-between font-bold pt-2 border-t">
                             <span>Estimated Total</span>
-                            <span>$8.64</span>
+                            <span>
+                                $
+                                {getTotalPrice() === 0
+                                    ? 0
+                                    : (
+                                        getTotalPrice() +
+                                        pickupFee +
+                                        // discounts -
+                                        getTotalPrice() * 0.07
+                                    ).toFixed(2)}
+                            </span>
                         </div>
                     </div>
 
@@ -170,4 +209,3 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
-

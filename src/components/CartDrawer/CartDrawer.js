@@ -2,10 +2,17 @@ import React, { useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
+import itemImage from '../../assets/item.jpg'
 
 const CartDrawer = () => {
-    const { cartItems, isCartOpen, setIsCartOpen, addToCart, removeFromCart } =
-        useCart();
+    const {
+        cartItems,
+        isCartOpen,
+        setIsCartOpen,
+        incrementQuantity,
+        decrementQuantity,
+        removeFromCart,
+    } = useCart();
     const location = useLocation();
 
     // Close cart when route changes
@@ -13,7 +20,7 @@ const CartDrawer = () => {
         setIsCartOpen(false);
     }, [location.pathname, setIsCartOpen]);
 
-    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    // const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
@@ -31,14 +38,14 @@ const CartDrawer = () => {
 
             {/* Cart Drawer */}
             <div
-                className={`fixed top-0 right-0 h-4/6 w-full sm:w-80 bg-white shadow-lg transform ${
+                className={`fixed top-0 right-0 h-full w-full sm:w-80 bg-white shadow-lg transform ${
                     isCartOpen ? 'translate-x-0' : 'translate-x-full'
                 } transition-transform duration-300 ease-in-out z-50 rounded-lg`}
             >
                 {/* Header */}
                 <div className="p-4 border-b flex justify-between items-center rounded-xl bg-gray-50">
                     <h2 className="text-xl font-semibold">
-                        Your Cart ({totalItems} items)
+                        Your Cart ({cartItems.length} items)
                     </h2>
                     <button
                         onClick={() => setIsCartOpen(false)}
@@ -62,7 +69,8 @@ const CartDrawer = () => {
                             >
                                 {item.image && (
                                     <img
-                                        src={item.image}
+                                        // src={item.image}
+                                        src={itemImage}
                                         alt={item.name}
                                         className="w-20 h-20 object-cover rounded"
                                     />
@@ -75,10 +83,7 @@ const CartDrawer = () => {
                                     <div className="flex items-center space-x-2 mt-2">
                                         <button
                                             onClick={() =>
-                                                addToCart(
-                                                    item.id,
-                                                    item.quantity - 1
-                                                )
+                                                decrementQuantity(item._id)
                                             }
                                             className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
                                         >
@@ -89,10 +94,7 @@ const CartDrawer = () => {
                                         </span>
                                         <button
                                             onClick={() =>
-                                                addToCart(
-                                                    item.id,
-                                                    item.quantity + 1
-                                                )
+                                                incrementQuantity(item._id)
                                             }
                                             className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
                                         >
@@ -100,7 +102,7 @@ const CartDrawer = () => {
                                         </button>
                                         <button
                                             onClick={() =>
-                                                removeFromCart(item.id)
+                                                removeFromCart(item._id)
                                             }
                                             className="p-1 hover:bg-red-100 text-red-600 rounded ml-2 transition-colors duration-200"
                                         >
@@ -118,7 +120,7 @@ const CartDrawer = () => {
                     <div className="flex justify-between items-center mb-4">
                         <span className="font-semibold">Total:</span>
                         <span className="font-semibold">
-                            ${totalPrice.toFixed(2)}
+                            ${ totalPrice.toFixed(2)}
                         </span>
                     </div>
                     <Link to="/cart">

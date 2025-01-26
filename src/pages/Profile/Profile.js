@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Package, Edit2, Save, X } from 'lucide-react';
+import { User, Package, Edit2, Save, X, PartyPopper } from 'lucide-react';
 import LogoutButton from '../../components/LogoutBtn/LogoutBtn';
 import { useLoginAuth } from '../../context/AuthLoginContext';
 
@@ -83,44 +83,45 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="pt-28 max-w-4xl mx-auto space-y-6">
+        <div className="pt-20 px-4 md:pt-20 sm:px-6 lg:px-8 pt-10 sm:pt-16 lg:pt-28 max-w-7xl mx-auto space-y-4 sm:space-y-6">
             {/* Profile Header */}
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold">Welcome back! {user && user.name}</h1>
-                {!isEditing ? (
-                    <>
-                    <button
-                        onClick={handleEdit}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 rounded-lg hover:bg-blue-600 transition-all duration-300 hover:scale-105"
-                    >
-                        <Edit2 className="w-4 h-4" />
-                        Edit Profile
-                    </button>
-                    
-                    </>
-                ) : (
-                    <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left w-full">
+                    Welcome Back !🎉 {user && user.name}
+                </h1>
+                <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+                    {!isEditing ? (
                         <button
-                            onClick={handleSave}
-                            className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 hover:scale-105"
+                            onClick={handleEdit}
+                            className="flex items-center gap-2 p-2 bg-blue-500 rounded-lg hover:bg-blue-600 transition-all duration-300 hover:scale-105"
                         >
-                            <Save className="w-4 h-4" />
-                            Save
+                            <Edit2 className="w-3 h-3" />
+                            Edit Profile
                         </button>
-                        <button
-                            onClick={handleCancel}
-                            className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 hover:scale-105"
-                        >
-                            <X className="w-4 h-4" />
-                            Cancel
-                        </button>
-                    </div>
-                )}
+                    ) : (
+                        <div className="flex gap-2">
+                            <button
+                                onClick={handleSave}
+                                className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-300 hover:scale-105"
+                            >
+                                <Save className="w-4 h-4" />
+                                Save
+                            </button>
+                            <button
+                                onClick={handleCancel}
+                                className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 hover:scale-105"
+                            >
+                                <X className="w-4 h-4" />
+                                Cancel
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* User Information Card */}
             <Card
-                className={`transform transition-all duration-500 ${
+                className={`w-full transform transition-all duration-500 ${
                     isEditing ? 'scale-102 shadow-lg rotate-1' : ''
                 }`}
             >
@@ -191,7 +192,7 @@ const ProfilePage = () => {
             </Card>
 
             {/* Order History Card */}
-            <Card>
+            <Card className="w-full">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Package className="w-5 h-5" />
@@ -205,7 +206,7 @@ const ProfilePage = () => {
                                 key={order.id}
                                 className="border rounded-lg p-4 hover:bg-gray-50 transition-all duration-300 hover:scale-102"
                             >
-                                <div className="flex justify-between items-start mb-2">
+                                <div className="flex flex-col sm:flex-row justify-between items-start mb-2 space-y-2 sm:space-y-0">
                                     <div>
                                         <h3 className="font-medium">
                                             Order {order.id}
@@ -237,8 +238,9 @@ const ProfilePage = () => {
             </Card>
 
             {/* Logout Button */}
-            <section className="justify-center text-start" ><LogoutButton /></section>
-            
+            <section className="p-8 justify-center flex">
+                <LogoutButton />
+            </section>
         </div>
     );
 };

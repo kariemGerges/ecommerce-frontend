@@ -7,6 +7,9 @@ import Header from './components/header/Header';
 import CartDrawer from './components/CartDrawer/CartDrawer';
 import AuthModal from './components/AuthModal/AuthModal';
 
+// import context
+import { useCart } from './context/CartContext';
+
 // import pages
 import HomePage from './pages/HomePage/homePage';
 import ContactUs from './pages/ContactUs/ContactUs';
@@ -17,11 +20,14 @@ import ErrLandingPage from './pages/ErrLandingPage/ErrLandingPage';
 import Cart from './pages/Cart/Cart';
 import Profile from './pages/Profile/Profile';
 function App() {
+    const { setIsCartOpen } = useCart();
     return (
         <div>
             <Router>
                 <Link
-                    to="/cart"
+                    aria-label="Cart"
+                    title="Cart"
+                    onClick={() => setIsCartOpen(true)}
                     className="fixed bottom-8 right-8 z-50 bg-[#2D7A46] dark:bg-[#1B4332] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
                 >
                     <ShoppingCart size={24} />
