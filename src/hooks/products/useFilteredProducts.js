@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchFilteredProducts } from '../../services/api/products';
 
 export const useFilteredProducts = (filters, page = 1, limit = 10, options = {}) => {
-    console.log('filters 4 from the hook:', filters);
+    // console.log('filters 4 from the hook:', filters);
 
     return useQuery({
         queryKey: ['filteredProducts', { ...filters, page, limit }], // Query key dynamically changes based on filters and pagination
