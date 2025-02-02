@@ -19,6 +19,9 @@ import Products from './pages/Products/Products';
 import ErrLandingPage from './pages/ErrLandingPage/ErrLandingPage';
 import Cart from './pages/Cart/Cart';
 import Profile from './pages/Profile/Profile';
+import Checkout from './pages/Checkout/Checkout';
+import ThankYou from './pages/ThankYou/ThankYou';
+
 function App() {
     const { setIsCartOpen } = useCart();
     return (
@@ -45,6 +48,8 @@ function App() {
                         <Route path="/products" element={<Products />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path='/thankyou' element={<ThankYou />} />
                         {/* catch all other route */}
                         <Route path="/404" element={<ErrLandingPage />} />
                         <Route path="*" element={<ErrLandingPage />} />

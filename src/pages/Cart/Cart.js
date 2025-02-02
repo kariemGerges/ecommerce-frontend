@@ -2,7 +2,9 @@ import React from 'react';
 import { CircleDollarSign, Plus, Minus, Trash2 } from 'lucide-react';
 // import context
 import { useCart } from '../../context/CartContext';
-
+import { useLoginAuth } from '../../context/AuthLoginContext';
+// import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 import itemImg from '../../assets/item.jpg';
 
 const ShoppingCart = () => {
@@ -13,9 +15,16 @@ const ShoppingCart = () => {
         incrementQuantity,
         decrementQuantity,
         getTotalPrice,
+        pickupFee,
+        tax,
+        getTotalPriceWithPickupFeeAndTax,
     } = useCart();
 
-    const pickupFee = getTotalPrice() > 20 ? 0 : 4.95;
+    // const { setIsAuthModalOpen } = useAuth();
+    const { user } = useLoginAuth();
+
+    console.log('user from cart to fix checkout', user);
+
     // const discounts = 80;
 
     return (
@@ -146,17 +155,12 @@ const ShoppingCart = () => {
 
                         <div className="flex justify-between">
                             <span>Taxes</span>
-                            <span>${(getTotalPrice() * 0.07).toFixed(2)}</span>
+                            <span>${tax.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between font-medium pt-2 border-t">
                             <span>Subtotal</span>
                             <span>
-                                $
-                                {(
-                                    getTotalPrice() +
-                                    pickupFee +
-                                    getTotalPrice() * 0.07
-                                ).toFixed(2)}
+                                ${getTotalPriceWithPickupFeeAndTax.toFixed(2)}
                             </span>
                         </div>
 
@@ -179,12 +183,7 @@ const ShoppingCart = () => {
                                 $
                                 {getTotalPrice() === 0
                                     ? 0
-                                    : (
-                                        getTotalPrice() +
-                                        pickupFee +
-                                        // discounts -
-                                        getTotalPrice() * 0.07
-                                    ).toFixed(2)}
+                                    : getTotalPriceWithPickupFeeAndTax.toFixed(2)}
                             </span>
                         </div>
                     </div>
@@ -199,9 +198,13 @@ const ShoppingCart = () => {
                     </div>
 
                     {/* Checkout Button */}
-                    <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium">
+                    <Link
+                        to="/checkout"
+                        className="w-full bg-blue-600 text-white py-3 px-24 text-center
+                        block rounded-lg hover:bg-blue-700 font-medium"
+                    >
                         Begin Checkout
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

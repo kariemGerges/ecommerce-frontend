@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Package, Edit2, Save, X, PartyPopper } from 'lucide-react';
+import { User, Package, Edit2, Save, X } from 'lucide-react';
 import LogoutButton from '../../components/LogoutBtn/LogoutBtn';
 import { useLoginAuth } from '../../context/AuthLoginContext';
 

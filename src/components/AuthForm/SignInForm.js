@@ -1,12 +1,13 @@
 // Sign In Form Component
 
 import { Mail, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useLoginUser } from '../../hooks/auth/useLoginUser';
 
 const SignInForm = ({ setIsAuthModalOpen }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [authError, setAuthError] = useState('');
     const mutation = useLoginUser();
 
@@ -20,8 +21,9 @@ const SignInForm = ({ setIsAuthModalOpen }) => {
         mutation.mutate(form, {
             onSuccess: () => {
                 setAuthError('');
-                navigate('/profile');
+                navigate(location.pathname, { replace: true });
                 setIsAuthModalOpen(false);
+                alert('Login successful');
             },
             onError: (error) => {
                 const message = error.response?.data?.message || error.message;

@@ -66,8 +66,17 @@ export const CartProvider = ({ children }) => {
 
     // total price of items in cart
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+        return cartItems.reduce(
+            (total, item) => total + item.price * item.quantity,
+            0
+        );
     };
+
+    const pickupFee = getTotalPrice() > 20 ? 0 : 4.95;
+
+    const tax = getTotalPrice() * 0.07;
+
+    const getTotalPriceWithPickupFeeAndTax = getTotalPrice() + pickupFee + tax;
 
     return (
         <CartContext.Provider
@@ -81,6 +90,9 @@ export const CartProvider = ({ children }) => {
                 decrementQuantity,
                 emptyCart,
                 getTotalPrice,
+                tax,
+                pickupFee,
+                getTotalPriceWithPickupFeeAndTax,
             }}
         >
             {children}

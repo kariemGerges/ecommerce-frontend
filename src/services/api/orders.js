@@ -1,11 +1,10 @@
-import axios from 'axios';
+import axiosClient from "./axiosInstance";
 
-const API_BASE_URL = 'https://ecommerce-backend-8xv8.onrender.com';
 
-// fetch create order
+// create order
 export const createOrder = async (orderData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/orders`, orderData);
+        const response = await axiosClient.post(`/orders`, orderData);
         return response.data;
     } catch (error) {
         console.error('Error creating order:', error);
@@ -13,24 +12,13 @@ export const createOrder = async (orderData) => {
     }
 };
 
-// fetch user orders
+// fetch a user orders
 export const fetchUserOrders = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}`);
+        const response = await axiosClient.get(``);
         return response.data;
     } catch (error) {
         console.error('Error fetching user orders:', error);
-        throw error;
-    }
-};
-
-
-export const fetchOrders = async () => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/orders`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching orders:', error);
         throw error;
     }
 };
