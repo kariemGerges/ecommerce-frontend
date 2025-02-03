@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useCreateOrder } from '../../hooks/orders/useCreateOrder';
 import { useNavigate } from 'react-router-dom';
 
-const CheckoutBtnSection = ({ steps, currentStep, setCurrentStep, pickupDetails }) => {
+const CheckoutBtnSection = ({ steps, currentStep, setCurrentStep, pickupDetails, emptyCart }) => {
 
     // console.log('pickupDetails in checkout btn section', pickupDetails);
     const navigate = useNavigate();
@@ -33,11 +33,13 @@ const CheckoutBtnSection = ({ steps, currentStep, setCurrentStep, pickupDetails 
     // Final action
     const handlePlaceOrder = () => {
         // handle checkout logic 👍
-        // update order status
+        // update order status 👍
+        // empty cart 👍
         // update payment status
         // send email
         // send sms?
         // redirect to thank you page👍
+        emptyCart();
         createOrder(pickupDetails);
         navigate('/thankyou');
     };

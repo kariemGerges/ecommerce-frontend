@@ -6,6 +6,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import CartDrawer from './components/CartDrawer/CartDrawer';
 import AuthModal from './components/AuthModal/AuthModal';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 // import context
 import { useCart } from './context/CartContext';
@@ -46,10 +47,12 @@ function App() {
                         <Route path="/about" element={<AboutUs />} />
                         <Route path="/contact" element={<ContactUs />} />
                         <Route path="/products" element={<Products />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/checkout" element={<Checkout />} />
-                        <Route path='/thankyou' element={<ThankYou />} />
+                        <Route element={<ProtectedRoute />}>
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/thankyou" element={<ThankYou />} />
+                            <Route path="/checkout" element={<Checkout />} />
+                            <Route path="/cart" element={<Cart />} />
+                        </Route>
                         {/* catch all other route */}
                         <Route path="/404" element={<ErrLandingPage />} />
                         <Route path="*" element={<ErrLandingPage />} />

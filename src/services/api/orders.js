@@ -13,9 +13,9 @@ export const createOrder = async (orderData) => {
 };
 
 // fetch a user orders
-export const fetchUserOrders = async (userId) => {
+export const fetchUserOrders = async () => {
     try {
-        const response = await axiosClient.get(``);
+        const response = await axiosClient.get(`/orders/myOrders/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching user orders:', error);

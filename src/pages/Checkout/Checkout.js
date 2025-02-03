@@ -22,7 +22,7 @@ const Checkout = () => {
     // get theme
     const { theme } = useTheme();
     // get cart
-    const { cartItems } = useCart();
+    const { cartItems, emptyCart } = useCart();
 
 
     // navigate
@@ -128,6 +128,7 @@ const Checkout = () => {
                 currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
                 pickupDetails={pickupDetails}
+                emptyCart={emptyCart}
             />
         </div>
     );

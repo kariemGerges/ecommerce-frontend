@@ -4,9 +4,14 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
+        try {
         // Initialize cart items from local storage if available
         const storedCartItems = localStorage.getItem('cartItems');
-        return storedCartItems ? JSON.parse(storedCartItems) : [];
+            return storedCartItems ? JSON.parse(storedCartItems) : [];
+        } catch (error) {
+            console.error('Error parsing cart items from local storage:', error);
+            return [];
+        }
     });
     const [isCartOpen, setIsCartOpen] = useState(false);
 

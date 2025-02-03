@@ -2,7 +2,7 @@ import React from 'react';
 import { CircleDollarSign, Plus, Minus, Trash2 } from 'lucide-react';
 // import context
 import { useCart } from '../../context/CartContext';
-import { useLoginAuth } from '../../context/AuthLoginContext';
+// import { useLoginAuth } from '../../context/AuthLoginContext';
 // import { useAuth } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import itemImg from '../../assets/item.jpg';
@@ -21,9 +21,9 @@ const ShoppingCart = () => {
     } = useCart();
 
     // const { setIsAuthModalOpen } = useAuth();
-    const { user } = useLoginAuth();
+    // const { user } = useLoginAuth();
 
-    console.log('user from cart to fix checkout', user);
+    // console.log('user from cart to fix checkout', user);
 
     // const discounts = 80;
 
