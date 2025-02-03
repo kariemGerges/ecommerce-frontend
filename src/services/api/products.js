@@ -30,7 +30,7 @@ export const fetchPaginatedProducts = async (page = 1, limit = 10) => {
     }
 };
 
-// fetch filtered products
+// fetch filtered products let see
 // https://ecommerce-backend-8xv8.onrender.com/products/filtered?category=electronics
 export const fetchFilteredProducts = async ({ queryKey}) => {
     try {
