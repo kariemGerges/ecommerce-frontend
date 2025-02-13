@@ -3,8 +3,8 @@ import { User } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Cards';
 
 
+const UserInformationSection = ({ isEditing, user }) => {
 
-const UserInformationSection = ({ isEditing, user}) => {
 
         const [userInfo, setUserInfo] = useState({
             name: user && user.name,

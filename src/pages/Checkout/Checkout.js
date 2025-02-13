@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import context
 import { useLoginAuth } from '../../context/AuthLoginContext';
 import { useAuth } from '../../context/AuthContext';
@@ -22,8 +22,8 @@ const Checkout = () => {
     // get theme
     const { theme } = useTheme();
     // get cart
-    const { cartItems, emptyCart } = useCart();
-
+    const { cartItems, emptyCart, getTotalPriceWithPickupFeeAndTax } =
+        useCart();
 
     // navigate
     const Navigate = useNavigate();
@@ -39,35 +39,42 @@ const Checkout = () => {
     // checkout steps
     const steps = ['Pickup Details', 'Review Order'];
     const [currentStep, setCurrentStep] = useState(0);
-    
-    // what i need fpr the order details
-    // user info from useLoginAuth
-    // items and totalPrice info from useCart
-    // pickupDate from user input
-    // pickupTime from user input
-    // createAt from system date
-    // customerComments from user input
-    // paymentStatus Pending for now for all orders
+
+
 
     // pickup details
     const [pickupDetails, setPickupDetails] = useState({
         user,
         storeLocation: 'Main Branch',
-        pickupDate: '',
+        pickupDate: new Date().toLocaleDateString(),
         pickupTime: '',
         customerComments: '',
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toLocaleDateString(),
         paymentStatus: 'Pending',
         pickupStatus: 'Pending',
-        items: [{
-            productId: cartItems[0]?._id,
-            quantity: cartItems[0]?.quantity,
-            price: cartItems[0]?.price,
-            // _id: cartItems[0]?._id
-        }],
-        totalPrice: 0,
+        items: cartItems.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+            price: item.price,
+        })),
+        totalPrice: getTotalPriceWithPickupFeeAndTax(),
         userInfo: {},
     });
+
+useEffect(() => {
+    const calculatedTotal = getTotalPriceWithPickupFeeAndTax();
+    setPickupDetails((prev) => ({
+        ...prev,
+        totalPrice: calculatedTotal,
+        items: cartItems.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+            price: item.price,
+        })),
+    }));
+}, [cartItems, getTotalPriceWithPickupFeeAndTax]);
+
+
 
     // progress bar width
     const progressBarWidth = ((currentStep + 1) / steps.length) * 100;
@@ -83,10 +90,23 @@ const Checkout = () => {
     const renderStep = () => {
         switch (currentStep) {
             case 0: // Pickup Details
-                return <PickupDetailsSection pickupDetails={pickupDetails} setPickupDetails={setPickupDetails} theme={theme} containerVariants={containerVariants} />;
+                return (
+                    <PickupDetailsSection
+                        pickupDetails={pickupDetails}
+                        setPickupDetails={setPickupDetails}
+                        theme={theme}
+                        containerVariants={containerVariants}
+                    />
+                );
 
             case 1: // Review Order
-                return <ReviewOrderSection pickupDetails={pickupDetails} containerVariants={containerVariants} theme={theme} />;
+                return (
+                    <ReviewOrderSection
+                        pickupDetails={pickupDetails}
+                        containerVariants={containerVariants}
+                        theme={theme}
+                    />
+                );
             default:
                 return <div>Unknown step</div>;
         }

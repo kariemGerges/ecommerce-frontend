@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
-import itemImage from '../../assets/item.jpg'
+import itemImage from '../../assets/item.jpg';
+import { useTheme } from '../../context/ThemeContext';
 
 const CartDrawer = () => {
     const {
@@ -14,6 +15,8 @@ const CartDrawer = () => {
         removeFromCart,
     } = useCart();
     const location = useLocation();
+
+    const { theme } = useTheme();
 
     // Close cart when route changes
     useEffect(() => {
@@ -38,12 +41,21 @@ const CartDrawer = () => {
 
             {/* Cart Drawer */}
             <div
-                className={`fixed top-0 right-0 h-full w-full sm:w-80 bg-white shadow-lg transform ${
-                    isCartOpen ? 'translate-x-0' : 'translate-x-full'
-                } transition-transform duration-300 ease-in-out z-50 rounded-lg`}
+                className={`fixed top-0 right-0 h-full w-full sm:w-80 
+                    ${
+                        theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+                    } shadow-lg transform 
+                    ${
+                        isCartOpen ? 'translate-x-0' : 'translate-x-full'
+                    } transition-transform duration-300 ease-in-out z-50 rounded-lg`}
             >
                 {/* Header */}
-                <div className="p-4 border-b flex justify-between items-center rounded-xl bg-gray-50">
+                <div
+                    className={`p-4 border-b flex justify-between items-center rounded-xl
+                    ${
+                        theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
+                    }`}
+                >
                     <h2 className="text-xl font-semibold">
                         Your Cart ({cartItems.length} items)
                     </h2>
@@ -65,7 +77,11 @@ const CartDrawer = () => {
                         cartItems.map((item, index) => (
                             <div
                                 key={index}
-                                className="flex items-center space-x-4 bg-white p-3 rounded-lg border transform transition-all duration-200 hover:shadow-md"
+                                className={`flex items-center space-x-4 ${
+                                    theme === 'dark'
+                                        ? 'border-gray-700'
+                                        : 'border-gray-200'
+                                } p-3 rounded-lg border transform transition-all duration-200 hover:shadow-md`}
                             >
                                 {item.image && (
                                     <img
@@ -85,7 +101,11 @@ const CartDrawer = () => {
                                             onClick={() =>
                                                 decrementQuantity(item._id)
                                             }
-                                            className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
+                                            className={`p-1 ${
+                                                theme === 'dark'
+                                                    ? 'hover:bg-gray-100 text-gray-400'
+                                                    : 'hover:bg-gray-200 text-gray-600'
+                                            }  rounded transition-colors duration-200`}
                                         >
                                             <Minus className="h-4 w-4" />
                                         </button>
@@ -96,7 +116,11 @@ const CartDrawer = () => {
                                             onClick={() =>
                                                 incrementQuantity(item._id)
                                             }
-                                            className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
+                                            className={`p-1 ${
+                                                theme === 'dark'
+                                                    ? 'hover:bg-gray-100 text-gray-400'
+                                                    : 'hover:bg-gray-200 text-gray-600'
+                                            }  rounded transition-colors duration-200`}
                                         >
                                             <Plus className="h-4 w-4" />
                                         </button>
@@ -116,11 +140,15 @@ const CartDrawer = () => {
                 </div>
 
                 {/* Footer */}
-                <div className="border-t p-4 bg-gray-50">
+                <div
+                    className={`border-t p-4 ${
+                        theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
+                    }`}
+                >
                     <div className="flex justify-between items-center mb-4">
                         <span className="font-semibold">Total:</span>
                         <span className="font-semibold">
-                            ${ totalPrice.toFixed(2)}
+                            ${totalPrice.toFixed(2)}
                         </span>
                     </div>
                     <Link to="/cart">

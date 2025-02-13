@@ -1,6 +1,7 @@
 import image from '../../assets/vegetables_opengraph.jpg';
 import { ChevronRight } from 'lucide-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     return (
@@ -28,13 +29,13 @@ const HeroSection = () => {
                             convenience of modern technology.
                         </p>
                         <div className="flex space-x-4">
-                            <button className="bg-white text-[#2D7A46] px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform flex items-center space-x-2">
+                            <Link to="/products" className="bg-white text-[#2D7A46] px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform flex items-center space-x-2">
                                 <span>Shop Now</span>
                                 <ChevronRight size={20} />
-                            </button>
-                            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                            </Link>
+                            <Link to="/about" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors">
                                 Learn More
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -346,10 +346,6 @@ const FilterSidebar = ({ onFilterChange, currentFilters }) => {
     // Track which filter is are selected checked
     const [selectedFilters, setSelectedFilters] = useState(currentFilters);
 
-    // testing filters
-    // console.log('Selected Filters', selectedFilters);
-    console.log('filter 2 from the left side', selectedFilters);
-
     // when a checkbox is checked  // When a checkbox changes
     const handleCheckboxChange = (section, itemName, checked) => {
         setSelectedFilters((prev) => {

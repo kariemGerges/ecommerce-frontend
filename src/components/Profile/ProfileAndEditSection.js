@@ -1,6 +1,10 @@
 import { Edit2, Save, X } from "lucide-react";
+import { useTheme } from '../../context/ThemeContext';
+
 
 const ProfileAndEditSection = ({ isEditing, setIsEditing, user}) => {
+
+        const { theme } = useTheme();
 
         const handleEdit = () => {
             setIsEditing(true);
@@ -25,7 +29,11 @@ const ProfileAndEditSection = ({ isEditing, setIsEditing, user}) => {
                 {!isEditing ? (
                     <button
                         onClick={handleEdit}
-                        className="flex items-center gap-2 p-2 bg-blue-500 rounded-lg hover:bg-blue-600 transition-all duration-300 hover:scale-105"
+                        className={`flex items-center gap-2 px-4 py-2 ${
+                            theme === 'dark'
+                                ? 'bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300'
+                                : 'bg-gray-500 text-white rounded-lg hover:bg-gray-600'
+                        } transition-all duration-300 hover:scale-105`}
                     >
                         <Edit2 className="w-3 h-3" />
                         Edit Profile

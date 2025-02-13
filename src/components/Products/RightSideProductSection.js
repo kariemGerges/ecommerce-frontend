@@ -6,13 +6,14 @@ import { useCart } from '../../context/CartContext';
 import { useState } from 'react';
 
 // import components
-import Loading from '../Loading/Loading';
+import Loading from '../ui/Loading';
 import Error from '../Error/Error';
 import Pagination from '../Products/Pagination';
 import image from '../../assets/vegetables_opengraph.jpg';
-import NoProductsFound from './NotProductsFound';
+import NoProductsFound from '../ui/NotProductsFound';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import RefreshBtn from '../ui/RefreshBtn';
 
 const RightSideProductSection = ({ filters }) => {
     const [page, setPage] = useState(1);
@@ -63,13 +64,17 @@ const RightSideProductSection = ({ filters }) => {
                 <NoProductsFound />
             </div>
         );
+    
+    //  <div className="flex justify-between items-center mb-6">
+    //      <RefreshBtn />
+    //  </div>;
 
     return (
         <section>
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-semibold">
-                    Grocery Items on Sale
+                    Grocery Items on Sale <RefreshBtn />
                 </h1>
                 <select className="border rounded px-3 py-2">
                     <option>Best Match</option>
@@ -148,6 +153,7 @@ const RightSideProductSection = ({ filters }) => {
                 hasNextPage={hasNextPage}
                 hasPreviousPage={hasPreviousPage}
                 totalProducts={totalProducts}
+                page={page}
                 setPage={setPage}
             />
         </section>

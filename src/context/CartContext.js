@@ -81,7 +81,13 @@ export const CartProvider = ({ children }) => {
 
     const tax = getTotalPrice() * 0.07;
 
-    const getTotalPriceWithPickupFeeAndTax = getTotalPrice() + pickupFee + tax;
+    const getTotalPriceWithPickupFeeAndTax = () => {
+        const total = getTotalPrice();
+        const fee = total > 20 ? 0 : 4.95;
+        const taxAmount = total * 0.07;
+        return total + fee + taxAmount;
+    };
+
 
     return (
         <CartContext.Provider

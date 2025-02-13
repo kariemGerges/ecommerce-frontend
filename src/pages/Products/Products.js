@@ -17,8 +17,6 @@ const StorePage = () => {
         price: [],
     });
 
-    console.log('filters 1 products page', selectedFilters);
-
     // callback function to update the selected filters
     const handleFilterChange = (newFilters) => {
         setSelectedFilters(newFilters);

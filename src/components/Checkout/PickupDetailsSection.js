@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 
-const PickupDetailsSection = ({ pickupDetails, setPickupDetails, theme, containerVariants }) => {
-    
-
-
+const PickupDetailsSection = ({
+    pickupDetails,
+    setPickupDetails,
+    theme,
+    containerVariants,
+}) => {
     return (
         <motion.div
             key="pickupDetails"
@@ -66,14 +68,13 @@ const PickupDetailsSection = ({ pickupDetails, setPickupDetails, theme, containe
                 </label>
                 <input
                     type="time"
-                    
                     className={`w-full p-2 border rounded focus:ring-2 focus:ring-green-500
                                     ${theme === 'dark' ? 'bg-gray-700' : ''}`}
                     value={pickupDetails.pickupTime}
                     onChange={(e) =>
                         setPickupDetails({
                             ...pickupDetails,
-                            pickupTime:e.target.value,
+                            pickupTime: e.target.value,
                         })
                     }
                     required
@@ -89,11 +90,11 @@ const PickupDetailsSection = ({ pickupDetails, setPickupDetails, theme, containe
                     className={`w-full p-2 border rounded focus:ring-2 focus:ring-green-500
                                     ${theme === 'dark' ? 'bg-gray-700' : ''}`}
                     placeholder="Any instructions or notes..."
-                    value={pickupDetails.instructions}
+                    value={pickupDetails.customerComments}
                     onChange={(e) =>
                         setPickupDetails({
                             ...pickupDetails,
-                            instructions: e.target.value,
+                            customerComments: e.target.value,
                         })
                     }
                 />
