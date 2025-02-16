@@ -113,7 +113,7 @@ const Header = () => {
                     </nav>
 
                     {/* Right Section */}
-                    <div className="flex items-center space-x-6">
+                    <div className="flex items-center">
                         <ThemeToggleButton />
                         
                         {/* Mobile Menu Button */}
@@ -128,7 +128,7 @@ const Header = () => {
                         </button>
 
                         {/* Desktop Auth & Cart */}
-                        <div className="hidden md:flex items-center space-x-6">
+                        <div className="hidden md:flex items-center">
                             <Link
                                 to={user ? '/profile' : '/signin'}
                                 onClick={user ? undefined : handleAuthClick}

@@ -1,5 +1,6 @@
 import axiosClient from '../api/axiosInstance';
 
+
 // register user
 export const registerUser = async (userData) => {
     try {
@@ -28,8 +29,7 @@ export const logoutUser = async () => {
     } catch (error) {
         throw error.response.data;
     }
-}
-
+};
 
 // get user profile
 export const getUserProfile = async () => {
@@ -37,6 +37,9 @@ export const getUserProfile = async () => {
         const response = await axiosClient.get(`/auth/profile`);
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        if (error.response && error.response.status === 401) {
+            return null; // Return null for unauthorized users
+        }
+        throw error.response?.data || { message: 'Server error' };
     }
 };

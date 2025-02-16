@@ -1,5 +1,6 @@
 import { CircleDollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 
 const OrderSummarySection = ({
     theme,
@@ -8,6 +9,8 @@ const OrderSummarySection = ({
     getTotalPrice,
     getTotalPriceWithPickupFeeAndTax,
 }) => {
+    const { cartItems } = useCart();
+
     return (
         <div className="lg:w-96">
             <div
@@ -89,9 +92,15 @@ const OrderSummarySection = ({
 
                 {/* Checkout Button */}
                 <Link
-                    to="/checkout"
-                    className="w-full bg-blue-600 text-white py-3 px-24 text-center
-                        block rounded-lg hover:bg-blue-700 font-medium"
+                    to={cartItems.length === 0 ? '#' : '/checkout'} // Prevent navigation if cart is empty
+                    className={`w-full py-3 px-24 text-center block rounded-lg font-medium ${
+                        cartItems.length === 0
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    }`}
+                    onClick={(e) => {
+                        if (cartItems.length === 0) e.preventDefault(); // Prevent navigation when cart is empty
+                    }}
                 >
                     Begin Checkout
                 </Link>
